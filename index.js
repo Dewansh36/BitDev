@@ -48,11 +48,11 @@ passport.deserializeUser(User.deserializeUser());
 //register and login routes
 
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('frontpage');
 });
 
 app.get('/register', async (req, res, next) => {
-    res.render('registration');
+    res.render('/users/registration');
 });
 
 
@@ -95,7 +95,7 @@ app.post('/register', async (req, res, next) => {
 });
 
 app.get('/login', (req, res, next) => {
-    res.render('/login');
+    res.render('/users/login');
 });
 
 app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res, next) => {

@@ -26,7 +26,7 @@ const userSchema=new schema({
     cchandle:
     {
         type: String,
-    }
+    },
     description: {
         type: String
     }
