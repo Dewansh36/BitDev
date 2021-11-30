@@ -99,8 +99,8 @@ app.post('/register', async (req, res, next) => {
             }
         });
         // req.flash('success', 'Successfully Registered!');
-        console.log(res.locals.user);
-        const curUser=req.user;
+        const curUser=regUser;
+        console.log(curUser);
         res.render('selectPage', { curUser });
     }
     catch (err) {
