@@ -1,3 +1,5 @@
+
+
 const express=require('express');
 const mongoose=require('mongoose');
 const passport=require('passport');
@@ -7,7 +9,10 @@ const User=require('./models/schemauser');
 app.use(express.urlencoded({ extended: true }));
 const path=require('path');
 const ejsmate=require('ejs-mate');
+const flash=require('connect-flash');
+const session=require('express-session');
 
+//Setting Up mongoose
 async function main() {
     await mongoose.connect('mongodb://localhost:27017/BitDev');
 }
@@ -42,8 +47,14 @@ passport.use(new localStrat(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+//setting up sessions
 
+app.use(session({ secret: "Enter secret password here", resave: false, saveUninitialized: true }));
 
+//Setting up Flash messages
+app.use(flash());
+
+//For accessing flashes
 
 //register and login routes
 
@@ -52,14 +63,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/register', async (req, res, next) => {
-    res.render('/users/registration');
+    res.render('users/registration');
 });
 
 
 app.post('/register', async (req, res, next) => {
     try {
         if (req.body.password!=req.body.cpass) {
-
+            req.flash('error', 'Password and Confirm Password Mismatch');
             res.redirect('/register');
         }
         const user=new User(
@@ -73,7 +84,7 @@ app.post('/register', async (req, res, next) => {
                 description: req.body.description
             }
         );
-        console.log(req.body);
+        // console.log(req.body);
         // console.log(newUser, req.body);
 
         const regUser=await User.register(user, req.body.password);
@@ -83,21 +94,36 @@ app.post('/register', async (req, res, next) => {
         req.logIn(regUser, (err) => {
             if (err) {
                 console.log(err);
-                res.send("Error While Logging In!");
+                // req.flash('error', 'Error While Logging In!');
+                res.redirect('/login');
             }
         });
-        res.redirect('/selectOption');
+        // req.flash('success', 'Successfully Registered!');
+        console.log(res.locals.user);
+        const curUser=req.user;
+        res.render('selectPage', { curUser });
     }
     catch (err) {
         console.log(err);
+        // req.flash('error', "Error While Registering Try Again!");
         res.redirect('/register');
     }
 });
 
 app.get('/login', (req, res, next) => {
-    res.render('/users/login');
+    res.render('users/login');
 });
 
 app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res, next) => {
-    res.redirect('/selectionPage');
+    // res.send('Login OK!');
+    // req.flash('success', 'Welcome Back!');
+    // console.log(req.user, res.locals.user);
+    const curUser=req.user;
+    console.log(curUser);
+    res.render('selectPage', { curUser });
+});
+
+app.get('/logout', (req, res, next) => {
+    req.logOut();
+    res.redirect('/');
 });
