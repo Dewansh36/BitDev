@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 const schema=mongoose.Schema;
-const passportLocalMongoose=require('passport-local-mongoose')
+const passportLocalMongoose=require('passport-local-mongoose');
+const Post=require('../models/schemapost');
 //const autoIncrement=require('mongoose-auto-increment');
 
 // mongoose.set('useCreateIndex', true);
@@ -29,7 +30,19 @@ const userSchema=new schema({
     },
     description: {
         type: String
-    }
+    },
+    posts: [
+        {
+            type: schema.Types.ObjectId,
+            ref: 'Post',
+        }
+    ],
+    friends: [
+        {
+            type: schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
 });
 
 /*memeSchema.plugin(autoIncrement.plugin,{

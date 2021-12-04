@@ -1,11 +1,10 @@
-
-
 const express=require('express');
 const mongoose=require('mongoose');
 const passport=require('passport');
 const app=express();
 const localStrat=require('passport-local');
 const User=require('./models/schemauser');
+const Post=require('./models/schemapost');
 app.use(express.urlencoded({ extended: true }));
 const path=require('path');
 const ejsmate=require('ejs-mate');
@@ -33,33 +32,48 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 //For adding static file's like css and images etc
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.listen(3000, () => {
-    console.log('listning!');
+    console.log('Listining at Port 3000');
 });
 
-
-//passport Initaliazation[For Auth]
-app.use(passport.initialize());
-passport.use(new localStrat(User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 //setting up sessions
-
-app.use(session({ secret: "Enter secret password here", resave: false, saveUninitialized: true }));
+app.use(session({ secret: 'Bit Dev', resave: true, saveUninitialized: true }));
 
 //Setting up Flash messages
 app.use(flash());
 
+
+
+
+//passport Initaliazation[For Auth]
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrat(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //For accessing flashes
+app.use((req, res, next) => {
+    res.locals.success=req.flash('success');
+    res.locals.error=req.flash('error');
+    res.locals.user=req.user;
+    next();
+});
+
 
 //register and login routes
 
 app.get('/', (req, res) => {
+    // res.send('Home!');
     res.render('frontpage');
+});
+
+app.get('/selectPage', (req, res, next) => {
+    console.log(res.locals);
+    // console.log(req.user);
+    res.render('SelectPage');
 });
 
 app.get('/register', async (req, res, next) => {
@@ -70,7 +84,6 @@ app.get('/register', async (req, res, next) => {
 app.post('/register', async (req, res, next) => {
     try {
         if (req.body.password!=req.body.cpass) {
-            req.flash('error', 'Password and Confirm Password Mismatch');
             res.redirect('/register');
         }
         const user=new User(
@@ -94,18 +107,18 @@ app.post('/register', async (req, res, next) => {
         req.logIn(regUser, (err) => {
             if (err) {
                 console.log(err);
-                // req.flash('error', 'Error While Logging In!');
+                req.flash('error', err.message);
                 res.redirect('/login');
             }
         });
-        // req.flash('success', 'Successfully Registered!');
+        req.flash('success', 'Successfully Registered!');
         const curUser=regUser;
-        console.log(curUser);
-        res.render('selectPage', { curUser });
+        // console.log(curUser);
+        res.redirect('/selectPage');
     }
     catch (err) {
         console.log(err);
-        // req.flash('error', "Error While Registering Try Again!");
+        req.flash('error', err.message);
         res.redirect('/register');
     }
 });
@@ -116,14 +129,58 @@ app.get('/login', (req, res, next) => {
 
 app.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res, next) => {
     // res.send('Login OK!');
-    // req.flash('success', 'Welcome Back!');
-    // console.log(req.user, res.locals.user);
-    const curUser=req.user;
-    console.log(curUser);
-    res.render('selectPage', { curUser });
+    // console.log(req.user);
+    req.flash('success', 'Welcome Back!');
+    res.redirect('/selectPage');
 });
 
 app.get('/logout', (req, res, next) => {
     req.logOut();
+    req.flash('success', 'Aloha! See You Soon');
     res.redirect('/');
 });
+
+//User Personal Routes
+
+app.get('/users/:id', async (req, res, next) => {
+
+    let { id }=req.params;
+    const user=await User.findById(id)
+        .populate(
+            {
+                path: 'posts'
+            }
+        )
+        .populate(
+            {
+                path: 'friends'
+            }
+        );
+    res.send(user);
+    // this is the real One res.render('/users/profile', { user });
+});
+
+app.get('/users/:id/edit', async (req, res, next) => {
+    let { id }=req.params;
+    const user=await User.findById(id);
+    res.render('users/edit', { user });
+});
+
+app.put('/users/:id', async (req, res, next) => {
+
+    let { id }=req.params;
+    let changes=req.body;
+    let user=await User.findByIdAndUpdate(id, changes, { new: true, runValidators: true });
+    console.log(user);
+    res.redirect(`/users/${id}`);
+
+});
+
+app.delete('/users/:id', async (req, res, next) => {
+    let { id }=req.params;
+    await User.findByIdAndDelete({ id }); // Add a middleware in the model to delete all posts as well
+    req.user=null;
+    req.flash('success', 'Successfully Deleted User');
+    res.redirect('/');
+});
+

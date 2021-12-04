@@ -9,58 +9,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registartion Page</title>
     <!-- CSS LINKS -->
-    <link rel="stylesheet" href="/css/registration.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/registration.css">
     <!-- External links -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 </head>
 
 <body>
     <!-- multistep form -->
-    <form action="/register" id="msform" method="post">
-        <!-- progressbar -->
-        <ul id="progressbar">
-            <li class="active">Account Setup</li>
-            <li>Social Profiles</li>
-            <li>Personal Details</li>
-        </ul>
-        <!-- fieldsets -->
-        <fieldset>
-            <!-- First Card -->
-            <h2 class="fs-title">Create your account</h2>
-            <h3 class="fs-subtitle">Enter your credentials</h3>
-            <input type="text" name="username" placeholder="Username">
-            <input type="email" name="email" placeholder="Email" />
-            <input type="password" name="password" placeholder="Password" />
-            <input type="password" name="cpass" placeholder="Confirm Password" />
-            <input type="button" name="next" class="next action-button" value="Next" />
-        </fieldset>
-        <fieldset>
-            <!-- Second Card -->
-            <h2 class="fs-title">Coding Profiles</h2>
-            <h3 class="fs-subtitle">Your Coding Handles</h3>
-            <input type="text" name="codeforces" placeholder="Codeforces Handle" />
-            <input type="text" name="codechef" placeholder="Codechef Handle" />
+    <%- include('../partials/flash') %>
+        <form action="/register" id="msform" method="post">
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">Account Setup</li>
+                <li>Social Profiles</li>
+                <li>Personal Details</li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset>
+                <!-- First Card -->
+                <h2 class="fs-title">Create your account</h2>
+                <h3 class="fs-subtitle">Enter your credentials</h3>
+                <input type="text" name="username" placeholder="Username">
+                <input type="email" name="email" placeholder="Email" />
+                <input type="password" name="password" placeholder="Password" />
+                <input type="password" name="cpass" placeholder="Confirm Password" />
+                <input type="button" name="next" class="next action-button" value="Next" />
+            </fieldset>
+            <fieldset>
+                <!-- Second Card -->
+                <h2 class="fs-title">Coding Profiles</h2>
+                <h3 class="fs-subtitle">Your Coding Handles</h3>
+                <input type="text" name="codeforces" placeholder="Codeforces Handle" />
+                <input type="text" name="codechef" placeholder="Codechef Handle" />
 
-            <input type="button" name="previous" class="previous action-button" value="Previous" />
-            <input type="button" name="next" class="next action-button" value="Next" />
-        </fieldset>
-        <!-- Third Card -->
-        <fieldset>
-            <h2 class="fs-title">Personal Details</h2>
-            <h3 class="fs-subtitle">All About You</h3>
-            <input type="text" name="firstname" placeholder="First Name" />
-            <input type="text" name="lastname" placeholder="Last Name" />
-            <input type="text" name="collegename" placeholder="College Name" />
-            <textarea name="description" placeholder="Your bio"></textarea>
-            <input type="button" name="previous" class="previous action-button" value="Previous" />
-            <!-- <input type="button" name="submit" class="action-button" value="Submit" /> -->
-            <button class="action-button">submit</button>
-        </fieldset>
-        <!-- End of Card -->
-    </form>
-    <!-- Javascript Link -->
-    <script src="/js/registration.js"></script>
+                <input type="button" name="previous" class="previous action-button" value="Previous" />
+                <input type="button" name="next" class="next action-button" value="Next" />
+            </fieldset>
+            <!-- Third Card -->
+            <fieldset>
+                <h2 class="fs-title">Personal Details</h2>
+                <h3 class="fs-subtitle">All About You</h3>
+                <input type="text" name="firstname" placeholder="First Name" />
+                <input type="text" name="lastname" placeholder="Last Name" />
+                <input type="text" name="collegename" placeholder="College Name" />
+                <textarea name="description" placeholder="Your bio"></textarea>
+                <input type="button" name="previous" class="previous action-button" value="Previous" />
+                <!-- <input type="button" name="submit" class="action-button" value="Submit" /> -->
+                <button class="action-button">submit</button>
+            </fieldset>
+            <!-- End of Card -->
+        </form>
+        <!-- Javascript Link -->
+        <script src="js/registration.js"></script>
 </body>
 
 </html>
