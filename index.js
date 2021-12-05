@@ -35,7 +35,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.listen(3000, () => {
-    console.log('Listining at Port 3000');
+    console.log('listning!');
 });
 
 //setting up sessions
@@ -62,6 +62,15 @@ app.use((req, res, next) => {
     next();
 });
 
+// For checking Login
+
+const checkLogin=function (req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    req.flash('error', 'You Must be Logged In');
+    res.redirect('/login');
+}
 
 //register and login routes
 
@@ -70,8 +79,8 @@ app.get('/', (req, res) => {
     res.render('frontpage');
 });
 
-app.get('/selectPage', (req, res, next) => {
-    console.log(res.locals);
+app.get('/selectPage', checkLogin, (req, res, next) => {
+    // console.log(res.locals);
     // console.log(req.user);
     res.render('SelectPage');
 });
@@ -142,7 +151,7 @@ app.get('/logout', (req, res, next) => {
 
 //User Personal Routes
 
-app.get('/users/:id', async (req, res, next) => {
+app.get('/users/:id', checkLogin, async (req, res, next) => {
 
     let { id }=req.params;
     const user=await User.findById(id)
@@ -160,13 +169,13 @@ app.get('/users/:id', async (req, res, next) => {
     // this is the real One res.render('/users/profile', { user });
 });
 
-app.get('/users/:id/edit', async (req, res, next) => {
+app.get('/users/:id/edit', checkLogin, async (req, res, next) => {
     let { id }=req.params;
     const user=await User.findById(id);
     res.render('users/edit', { user });
 });
 
-app.put('/users/:id', async (req, res, next) => {
+app.put('/users/:id', checkLogin, async (req, res, next) => {
 
     let { id }=req.params;
     let changes=req.body;
@@ -176,11 +185,111 @@ app.put('/users/:id', async (req, res, next) => {
 
 });
 
-app.delete('/users/:id', async (req, res, next) => {
-    let { id }=req.params;
-    await User.findByIdAndDelete({ id }); // Add a middleware in the model to delete all posts as well
-    req.user=null;
-    req.flash('success', 'Successfully Deleted User');
-    res.redirect('/');
+app.delete('/users/:id', checkLogin, async (req, res, next) => {
+    try {
+        let { id }=req.params;
+        const user=findById(id);
+        for (let i=0; i<user.posts.length; i++) {
+            await Post.findByIdAndDelete(user.posts[i].id);
+        }
+        await User.findByIdAndDelete(id);
+        req.user=null;
+        req.flash('success', 'Successfully Deleted User');
+        res.redirect('/');
+    }
+    catch (err) {
+        req.flash('error', err.message);
+        res.redirect(`/users/${id}`);
+    }
 });
 
+// Post Routes CRUD
+
+app.get('/posts/new', checkLogin, (req, res, next) => {
+    res.render('posts/create');
+});
+
+app.post('/posts', checkLogin, async (req, res, next) => {
+    try {
+        const user=await User.findById(req.user.id);
+        // res.send(user);
+        const post=new Post(req.body);
+        post.author=user.id;
+        post.likes=0;
+        post.datePosted=new Date();
+        await post.populate('author');
+        user.posts.push(post);
+        await post.save();
+        await user.save();
+        res.send('OK!');
+        // console.log(post, user);
+        // req.flash('success', 'Posted Successfully!');
+        // res.redirect(`/users/${user.id}`);
+    }
+    catch (err) {
+        console.log(err);
+        req.flash('error', err.message);
+        res.redirect('/posts/new');
+    }
+});
+
+app.get('/posts/:id', checkLogin, async (req, res, next) => {
+    let { id }=req.params;
+    const post=await Post.findById(id)
+        .populate('author');
+    res.send(post);
+    // res.render('posts/displatPost', { post });
+});
+
+app.get('/posts/:id/edit', checkLogin, async (req, res, next) => {
+    let { id }=req.params;
+    const post=await Post.findById(id).populate('author');
+    if (post.author.id!=req.user.id) {
+        req.flash('error', 'You Cant Edit Others Posts');
+        res.redirect(`/posts/${id}`);
+    }
+    res.render('posts/edit', { post });
+});
+
+app.put('/posts/:id', checkLogin, async (req, res, next) => {
+    try {
+        let { id }=req.params;
+        const post=await Post.findById(id).populate('author');
+        if (post.author.id!=req.user.id) {
+            req.flash('error', 'You Cant Edit Others Posts');
+            res.redirect(`/posts/${id}`);
+        }
+        const newPost=await Post.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
+        console.log(newPost);
+        req.flash('success', 'Successfully Edited The Post');
+        res.redirect(`/posts/${id}`);
+    }
+    catch (err) {
+        req.flash('error', err.message);
+        res.redirect(`/posts/${id}/edit`);
+    }
+});
+
+app.delete('/posts/:id', checkLogin, async (req, res, next) => {
+    try {
+        let { id }=req.params;
+        const post=await Post.findById(id).populate('author');
+        if (post.author.id!=req.user.id) {
+            req.flash('error', 'You Cant Delete Others Posts');
+            res.redirect(`/posts/${id}`);
+        }
+        const user=await User.findById(post.author.id).populate('posts');
+        const index=user.posts.indexOf(post);
+        if (index>-1) {
+            user.posts.splice(index, 1);
+        }
+        await Post.findByIdAndDelete(id);
+        await user.save();
+        req.flash('success', 'Successfully Deleted The Post');
+        res.redirect('/selectionPage');
+    }
+    catch (err) {
+        req.flash('error', err.message);
+        res.redirect(`/posts/${id}`);
+    }
+});

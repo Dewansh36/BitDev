@@ -2,12 +2,12 @@ const mongoose=require('mongoose');
 const User=require('../models/schemauser');
 const Schema=mongoose.Schema;
 
-const imageSchema=new Schema(
-    {
-        url: String,
-        filename: String,
-    }
-);
+// const imageSchema=new Schema(
+//     {
+//         url: String,
+//         filename: String,
+//     }
+// );
 
 const postSchema=new Schema(
     {
@@ -27,7 +27,10 @@ const postSchema=new Schema(
         likes: {
             type: Number
         },
-        images: imageSchema,
+        images: {
+            type: String,
+        },
+        datePosted: Date,
     }
 );
 
