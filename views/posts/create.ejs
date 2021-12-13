@@ -27,102 +27,105 @@
             </p>
         </div>
 
+        <form action="/posts/new" method="post">
+            <div class="animation-container">
+                <!-- Step one -->
+                <div class="form-step js-form-step" data-step="1">
 
-        <div class="animation-container">
-            <!-- Step one -->
-            <div class="form-step js-form-step" data-step="1">
+                    <p class="form-instructions"><strong>Click the continue button progress.</strong><br>
+                        Please fill out the fields below .</p>
 
-                <p class="form-instructions"><strong>Click the continue button progress.</strong><br>
-                    Please fill out the fields below .</p>
+                    <div name="form-step-1">
+                        <div class="fieldgroup">
+                            <input type="text" name="firstName" id="firstName" />
+                            <label for="firstName">Project name</label>
+                        </div>
 
-                <form action="" name="form-step-1">
-                    <div class="fieldgroup">
-                        <input type="text" name="firstName" id="firstName" />
-                        <label for="firstName">Project name</label>
+                        <div class="fieldgroup">
+                            <input type="text" name="desc" id="desc" />
+                            <label for="desc">Project description</label>
+                        </div>
+                        <div class="buttons">
+                            <!-- <button type="button" class="btn btn-alt js-reset">Back</button> -->
+
+                            <button type="submit" class="btn">Continue</button>
+                        </div>
                     </div>
 
-                    <div class="fieldgroup">
-                        <input type="text" name="desc" id="desc" />
-                        <label for="desc">Project description</label>
+                </div>
+
+                <!-- Step two -->
+                <div class="form-step js-form-step waiting hidden" data-step="2">
+
+                    <p class="form-instructions"><strong>Click the continue button progress.</strong><br>
+                        Please fill out the fields below .</p>
+
+                    <div name="form-step-2">
+                        <div class="fieldgroup">
+                            <input type="file" name="file" id="file" multiple />
+
+                        </div>
+
+                        <div class="buttons">
+                            <button type="button" class="btn btn-alt js-reset">Back</button>
+
+                            <button type="submit" class="btn">Continue</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- Step three -->
+                <div class="form-step js-form-step waiting hidden" data-step="3">
+
+                    <p class="form-instructions"><strong>Click the continue button progress.</strong><br>
+                        Please fill out the fields below .</p>
+
+                    <div name="form-step-3">
+                        <div class="fieldgroup">
+                            <input type="text" name="tech" id="tech" />
+                            <label for="tech">Tech-Stack Used</label>
+                        </div>
+
+
+
+                        <div class="buttons">
+                            <button type="button" class="btn btn-alt js-reset">Back</button>
+
+                            <button type="submit" class="btn">Continue</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <!-- Step four -->
+                <div class="form-step js-form-step waiting hidden" data-step="4">
+
+                    <p class="form-instructions"><strong>Click the continue button to progress.</strong>
+                        <br> Finally, please just write the words "I Agree" in the field below to consent to us using
+                        the
+                        previous data you entered to create a new post.
+                    </p>
+
+                    <div name="form-step-4">
+                        <div class="fieldgroup">
+                            <input type="text" name="agreen" id="agreen" />
+                            <label for="agreen">I agree</label>
+                        </div>
+
+
                     </div>
                     <div class="buttons">
-                        <!-- <button type="button" class="btn btn-alt js-reset">Back</button> -->
-
-                        <button type="submit" class="btn">Continue</button>
+                        <button class="btn btn-alt js-reset">Submit</button>
                     </div>
-                </form>
 
+                </div>
             </div>
-
-            <!-- Step two -->
-            <div class="form-step js-form-step waiting hidden" data-step="2">
-
-                <p class="form-instructions"><strong>Click the continue button progress.</strong><br>
-                    Please fill out the fields below .</p>
-
-                <form action="" name="form-step-2">
-                    <div class="fieldgroup">
-                        <input type="file" name="file" id="file" multiple />
-
-                    </div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn btn-alt js-reset">Back</button>
-
-                        <button type="submit" class="btn">Continue</button>
-                    </div>
-                </form>
-
-            </div>
-
-
-
-            <!-- Step three -->
-            <div class="form-step js-form-step waiting hidden" data-step="3">
-
-                <p class="form-instructions"><strong>Click the continue button progress.</strong><br>
-                    Please fill out the fields below .</p>
-
-                <form action="" name="form-step-3">
-                    <div class="fieldgroup">
-                        <input type="text" name="tech" id="tech" />
-                        <label for="tech">Tech-Stack Used</label>
-                    </div>
-
-
-
-                    <div class="buttons">
-                        <button type="button" class="btn btn-alt js-reset">Back</button>
-
-                        <button type="submit" class="btn">Continue</button>
-                    </div>
-                </form>
-
-            </div>
-
-
-
-            <!-- Step four -->
-            <div class="form-step js-form-step waiting hidden" data-step="4">
-
-                <p class="form-instructions"><strong>Click the continue button to progress.</strong>
-                    <br> Finally, please just write the words "I Agree" in the field below to consent to us using the
-                    previous data you entered to create a new post.
-                </p>
-
-                <form action="" name="form-step-4">
-                    <div class="fieldgroup">
-                        <input type="text" name="agreen" id="agreen" />
-                        <label for="agreen">I agree</label>
-                    </div>
-
-                    <div class="buttons">
-                        <button type="button" class="btn btn-alt js-reset">Submit</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
+        </form>
     </section>
     <script src="/js/create.js"></script>
 </body>
