@@ -1,6 +1,8 @@
 const User=require('../models/schemauser');
 const Post=require('../models/schemapost');
 const express=require('express');
+const multer=require('multer');
+
 
 module.exports.renderCreate=(req, res, next) => {
     res.render('posts/create');
@@ -32,12 +34,19 @@ module.exports.create=async (req, res, next) => {
         post.author=user.id;
         post.likes=0;
         post.datePosted=new Date();
+        for (let file of req.files) {
+            let obj={
+                url: file.path,
+                filename: file.filename
+            }
+            post.images.push(obj);
+        }
         await post.populate('author');
         user.posts.push(post);
         await post.save();
         await user.save();
+        console.log(post, user);
         res.send('OK!');
-        // console.log(post, user);
         // req.flash('success', 'Posted Successfully!');
         // res.redirect(`/users/${user.id}`);
     }

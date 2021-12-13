@@ -1,16 +1,18 @@
 const User=require('../models/schemauser');
 const Post=require('../models/schemapost');
 const express=require('express');
-const router=express.Router();
+const router=express.Router({ mergeParams: true });
 const userController=require('../controllers/userController');
 const checkLogin=require('../middleware/checkLogin');
+const userAuth=require('../middleware/userAuth');
+const catchAsync=require('../middleware/catchAsync');
 
 router.route('/:id')
     .get(checkLogin, userController.profile)
-    .put(checkLogin, userController.edit)
-    .delete(checkLogin, userController.delete);
+    .put(checkLogin, userAuth, catchAsync(userController.edit))
+    .delete(checkLogin, userAuth, catchAsync(userController.delete));
 
 router.route('/:id/edit')
-    .get(checkLogin, userController.renderEdit);
+    .get(checkLogin, userAuth, userController.renderEdit);
 
 module.exports=router;

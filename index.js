@@ -11,6 +11,9 @@ const ejsmate=require('ejs-mate');
 const flash=require('connect-flash');
 const session=require('express-session');
 const methodOverride=require('method-override');
+const axios=require('axios');
+require('dotenv').config();
+const multer=require('multer');
 
 //Setting Up mongoose
 async function main() {
@@ -72,6 +75,7 @@ const checkLogin=require('./middleware/checkLogin');
 const loginRoutes=require('./routes/loginRoutes');
 const userRoutes=require('./routes/userRoutes');
 const postRoutes=require('./routes/postRoutes');
+const commentRoutes=require('./routes/commentRoutes');
 
 app.get('/', (req, res) => {
     // res.send('Home!');
@@ -84,7 +88,7 @@ app.get('/selectPage', checkLogin, (req, res, next) => {
     res.render('SelectPage');
 });
 
-//login ROutes
+//login Routes
 app.use('/', loginRoutes);
 
 //User Routes
@@ -93,3 +97,24 @@ app.use('/users', userRoutes);
 //Posts Routes
 app.use('/posts', postRoutes);
 
+// Comments Routes
+app.use('/posts/:pid/comments', commentRoutes);
+
+
+app.get('/cp', async (req, res, next) => {
+
+    const problems=await axios.get('https://codeforces.com/api/problemset.problems');
+    // console.log(problems.data.result.problems);
+    for (let problem of problems.data.result.problems) {
+        if (problem&&problem.rating&&problem.rating==1000) {
+            console.log(problem);
+        }
+    }
+    res.send('Ok!');
+});
+
+app.use((err, req, res, next) => {
+    let { status=500, message="Error Occurred!" }=err;
+    console.log(err);
+    res.status(status).send(message);
+});

@@ -1,7 +1,8 @@
 const mongoose=require('mongoose');
 const schema=mongoose.Schema;
 const passportLocalMongoose=require('passport-local-mongoose');
-const Post=require('../models/schemapost');
+const Post=require('./schemapost');
+const Comment=require('./schemacomment');
 //const autoIncrement=require('mongoose-auto-increment');
 
 // mongoose.set('useCreateIndex', true);
@@ -42,7 +43,15 @@ const userSchema=new schema({
             type: schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
+    comments: [
+        {
+            type: schema.Types.ObjectId,
+            ref: 'Comment'
+        }
+    ],
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
 });
 
 /*memeSchema.plugin(autoIncrement.plugin,{

@@ -1,13 +1,14 @@
 const mongoose=require('mongoose');
 const User=require('../models/schemauser');
+const Comment=require('./schemacomment');
 const Schema=mongoose.Schema;
 
-// const imageSchema=new Schema(
-//     {
-//         url: String,
-//         filename: String,
-//     }
-// );
+const imageSchema=new Schema(
+    {
+        url: String,
+        filename: String,
+    }
+);
 
 const postSchema=new Schema(
     {
@@ -27,9 +28,15 @@ const postSchema=new Schema(
         likes: {
             type: Number
         },
-        images: {
-            type: String,
-        },
+        images: [
+            imageSchema
+        ],
+        comments: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Comment'
+            }
+        ],
         datePosted: Date,
     }
 );
