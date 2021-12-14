@@ -46,9 +46,8 @@ module.exports.create=async (req, res, next) => {
         await post.save();
         await user.save();
         console.log(post, user);
-        res.send('OK!');
-        // req.flash('success', 'Posted Successfully!');
-        // res.redirect(`/users/${user.id}`);
+        req.flash('success', 'Posted Successfully!');
+        res.redirect(`/posts/${post.id}`);
     }
     catch (err) {
         console.log(err);
