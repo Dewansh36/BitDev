@@ -14,7 +14,7 @@ const methodOverride=require('method-override');
 const axios=require('axios');
 require('dotenv').config();
 const multer=require('multer');
-
+require('dotenv').config();
 //Setting Up mongoose
 async function main() {
     await mongoose.connect('mongodb://localhost:27017/BitDev');
@@ -92,14 +92,13 @@ app.get('/selectPage', checkLogin, (req, res, next) => {
 app.use('/', loginRoutes);
 
 //User Routes
-app.use('/users', userRoutes);
+app.use('/users', userRoutes); 
 
 //Posts Routes
 app.use('/posts', postRoutes);
 
 // Comments Routes
 app.use('/posts/:pid/comments', commentRoutes);
-
 
 app.get('/cp', async (req, res, next) => {
 
@@ -111,8 +110,7 @@ app.get('/cp', async (req, res, next) => {
         }
     }
     res.send('Ok!');
-});
-
+}); 
 app.use((err, req, res, next) => {
     let { status=500, message="Error Occurred!" }=err;
     console.log(err);
