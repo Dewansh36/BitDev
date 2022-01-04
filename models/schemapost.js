@@ -28,6 +28,9 @@ const postSchema=new Schema(
         likes: {
             type: Number
         },
+        techStack: {
+            type: String
+        },
         images: [
             imageSchema
         ],

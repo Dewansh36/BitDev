@@ -27,7 +27,7 @@
             </p>
         </div>
 
-        <form action="/posts/new" method="post">
+        <form action="/posts/new" method="post" enctype="multipart/form-data">
             <div class="animation-container">
                 <!-- Step one -->
                 <div class="form-step js-form-step" data-step="1">
@@ -37,18 +37,18 @@
 
                     <div name="form-step-1">
                         <div class="fieldgroup">
-                            <input type="text" name="firstName" id="firstName" />
+                            <input type="text" name="title" id="firstName" />
                             <label for="firstName">Project name</label>
                         </div>
 
                         <div class="fieldgroup">
-                            <input type="text" name="desc" id="desc" />
+                            <input type="text" name="description" id="desc" />
                             <label for="desc">Project description</label>
                         </div>
                         <div class="buttons">
                             <!-- <button type="button" class="btn btn-alt js-reset">Back</button> -->
 
-                            <button type="submit" class="btn">Continue</button>
+                            <button type="button" class="btn">Continue</button>
                         </div>
                     </div>
 
@@ -62,14 +62,14 @@
 
                     <div name="form-step-2">
                         <div class="fieldgroup">
-                            <input type="file" name="file" id="file" multiple />
+                            <input type="file" name="images" id="file" multiple />
 
                         </div>
 
                         <div class="buttons">
                             <button type="button" class="btn btn-alt js-reset">Back</button>
 
-                            <button type="submit" class="btn">Continue</button>
+                            <button type="button" class="btn">Continue</button>
                         </div>
                     </div>
 
@@ -85,16 +85,14 @@
 
                     <div name="form-step-3">
                         <div class="fieldgroup">
-                            <input type="text" name="tech" id="tech" />
+                            <input type="text" name="techStack" id="tech" />
                             <label for="tech">Tech-Stack Used</label>
                         </div>
 
-
-
                         <div class="buttons">
-                            <button type="button" class="btn btn-alt js-reset">Back</button>
+                            <button type="button" class="btn btn-alt  js-reset">Back</button>
 
-                            <button type="submit" class="btn">Continue</button>
+                            <button type="button" class="btn">Continue</button>
                         </div>
                     </div>
 
@@ -106,21 +104,20 @@
                 <div class="form-step js-form-step waiting hidden" data-step="4">
 
                     <p class="form-instructions"><strong>Click the continue button to progress.</strong>
-                        <br> Finally, please just write the words "I Agree" in the field below to consent to us using
-                        the
-                        previous data you entered to create a new post.
+                        <br> Finally, By Clicking on the SUBMIT button you consent to us using
+                        the previous data you entered to create a new post.
                     </p>
 
-                    <div name="form-step-4">
+                    <!-- <div name="form-step-4">
                         <div class="fieldgroup">
                             <input type="text" name="agreen" id="agreen" />
                             <label for="agreen">I agree</label>
                         </div>
 
 
-                    </div>
+                    </div> -->
                     <div class="buttons">
-                        <button class="btn btn-alt js-reset">Submit</button>
+                        <button class="btn btn-alt">Submit</button>
                     </div>
 
                 </div>
