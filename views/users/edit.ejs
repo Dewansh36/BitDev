@@ -30,14 +30,13 @@
         <fieldset>
             <h2 class="fs-title"> Edit Personal Details</h2>
             <h3 class="fs-subtitle">Anything you want to change</h3>
-            <input type="text" name="firstname" placeholder="First Name" />
-            <input type="text" name="lastname" placeholder="Last Name" />
-            <input type="email" name="email" placeholder="Email" />
-            <input type="text" name="codeforces" placeholder="Codeforces Handle" />
-            <input type="text" name="codechef" placeholder="Codechef Handle" />
-            <textarea name="description" placeholder="Your bio"></textarea>
+            <input value="<%= curuser.displayname %>" type="text" name="firstname" placeholder="Display Name" />
+            <input value="<%= curuser.email %>" type="email" name="email" placeholder="Email" />
+            <input value="<%= curuser.cfhandle %>" type="text" name="codeforces" placeholder="Codeforces Handle" />
+            <input value="<%= curuser.cchandle %>" type="text" name="codechef" placeholder="Codechef Handle" />
+            <textarea value="<%= curuser.description %>" name="description" placeholder="Your bio"></textarea>
 
-            <button class="action-button">Submit</button>
+            <button type="submit" class="action-button">Submit</button>
         </fieldset>
         <!-- End of Card -->
     </form>

@@ -41,10 +41,11 @@
 
 <body>
     <%- include('partials/flash') %>
+    <%- include('./partials/navbar') %> 
         <section id="title">
             <!-- Nav Bar -->
             <div class="container-fluid">
-                <nav class="navbar  navbar-expand-lg navbar-dark">
+                <!-- <nav class="navbar  navbar-expand-lg navbar-dark">
                     <a class="navbar-brand" href=""><img src="image/picture1.png" alt="" class="LogoImage"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -54,7 +55,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav m-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/users/<%= user.id %> ">
+                                <a class="nav-link" href="/users/<%= user.id %>">
                                     <%= user.username %>
                                 </a>
                             </li>
@@ -66,7 +67,7 @@
                             </li>
                         </ul>
                     </div>
-                </nav>
+                </nav> -->
         </section>
         <section id="Description">
             <div class="row">
@@ -92,7 +93,7 @@
                                     <p class="card-text">Get all the data about your rating and get recommended
                                         problems
                                         based on your rating . </p>
-                                    <a href="CP.html" class="card-link">Click here</a>
+                                    <a href="/cp" class="card-link">Click here</a>
                                 </div>
                             </div>
                         </div>

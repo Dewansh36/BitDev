@@ -15,4 +15,6 @@ router.route('/:id')
 router.route('/:id/edit')
     .get(checkLogin, userAuth, userController.renderEdit);
 
+router.route('/:id/friends')
+    .get(checkLogin, userAuth, catchAsync(userController.getFriends));
 module.exports=router;

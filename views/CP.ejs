@@ -40,19 +40,19 @@
                 <div class="col-lg-6 col-md-12 stats">
                    <h1 class="heading">CP Stats</h1> 
                     <div class="cf">
-                        <img class ="logo_pic" src="images/cf.jpg" alt="codeforces">
+                        <img class ="logo_pic" src="/image/cf.png" alt="codeforces">
                         <p>
                             <h2>Codeforces</h2>
-                            <h3 class="resFix">Handle - <span id="cfhandle"></span></h3>
-                            <h3 class="resFix">Current rating - <span id="cfrating"></span> </h3>
+                            <h3 class="resFix">Handle  <span id="cfhandle"><%= curuser.cfhandle %></span></h3>
+                            <h3 class="resFix">Current rating   <span id="cfrating"></span> </h3>
                             <h3 class="resFix">Current rank - <span id="cfcrank"></span></h3>
                             <h3 class="resFix">Max rating - <span id="cfmrating"></span></h3>
                         </p>
                     </div>
-                    <img class ="logo_pic" src="images/cc.png" alt="codechef">
+                    <img class ="logo_pic" src="/image/cc.png" alt="codechef">
                     <p>
                         <h2>Codechef</h2>
-                        <h3 class="resFix">Handle - <span id="cchandle"></span></h3>
+                        <h3 class="resFix">Handle   <span id="cchandle"><%= curuser.cchandle %></span></h3>
                         <h3 class="resFix">Current rating - <span id="ccrating"></span></h3>
                         <h3 class="resFix">Current rank - <span id="cccrank"></span></h3>
                         <h3 class="resFix">Max rating - <span id="ccmrating"></span></h3>
@@ -78,6 +78,6 @@
     <section id="footer">
         <%- include('partials/footer')%>
     </section>
-    <script src="js/CP.js" charset="utf-8"></script>
+    <script src="/js/CP.js" charset="utf-8"></script>
 </body>
 </html>

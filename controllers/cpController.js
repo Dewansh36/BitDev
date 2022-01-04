@@ -1,68 +1,43 @@
-let cfhandle=document.getElementById("cfhandle").innerHTML;
-let cfrating=document.getElementById("cfrating");
-let cfcrank=document.getElementById("cfcrank");
-let cfmrating=document.getElementById("cfmrating");
-
-let cchandle=document.getElementById("cchandle").innerHTML;
-let ccrating=document.getElementById("ccrating");
-let cccrank=document.getElementById("cccrank");
-let ccmrating=document.getElementById("ccmrating");
-
-let problem1=document.getElementById("p1");
-let problem2=document.getElementById("p2");
-let problem3=document.getElementById("p3");
-
-let linkProblem1=document.getElementById("ap1");
-let linkProblem2=document.getElementById("ap2");
-let linkProblem3=document.getElementById("ap3");
-
-let contest1=document.getElementById("c1");
-let contest2=document.getElementById("c2");
-let contest3=document.getElementById("c3");
-
-let linkContest1=document.getElementById("ac1");
-let linkContest2=document.getElementById("ac2");
-let linkContest3=document.getElementById("ac3");
-
-let time1=document.getElementById("Time1");
-let time2=document.getElementById("Time2");
-let time3=document.getElementById("Time3");
+const express=require('express');
+const User=require('../models/schemauser');
 
 let rpRating=800;
 let run=false;
 let subData;
 
 function GetData() {
-    let cfh=cfhandle;
-    console.log(cfh);
+    const curuser=await User.findById(req.user.id);
+    let cfh=curuser.cfhandle;
+    let getdata={};
     urlcf="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfh;
     fetch(urlcf).then((response) => {
         return response.json();
     }).then((data) => {
         console.log(data);
-        cfrating.innerHTML=data.rating;
-        cfcrank.innerHTML=data.rank;
-        cfmrating.innerHTML=data["max rating"];
-        rpRating=data.rating;
+        // cfrating.innerHTML=data.rating;
+        // cfcrank.innerHTML=data.rank;
+        // cfmrating.innerHTML=data["max rating"];
+        // rpRating=data.rating;
+        getdata.cfData=data;
     })
 
     let cch=cchandle;
-    console.log(cch);
     urlcc="https://competitive-programming-score.herokuapp.com/api/codechef/"+cch;
     fetch(urlcc).then((response) => {
         return response.json();
     }).then((data) => {
         console.log(data);
-        ccrating.innerHTML=data.rating;
-        cccrank.innerHTML=data.stars;
-        ccmrating.innerHTML=data.highest_rating;
+        // ccrating.innerHTML=data.rating;
+        // cccrank.innerHTML=data.stars;
+        // ccmrating.innerHTML=data.highest_rating;
+        getdata.ccdata=data;
     })
     run=true;
+    return getdata;
 }
 
-GetData();
-
 function GetUpcomingData() {
+    let getUpcomingData={};
     urlud="https://codeforces.com/api/contest.list?gym=false";
     fetch(urlud).then((response) => {
         return response.json();
@@ -96,8 +71,6 @@ function GetUpcomingData() {
         }
     })
 }
-
-GetUpcomingData();
 
 function secondsToDhms(seconds) {
     seconds=Number(seconds);
@@ -172,6 +145,3 @@ function GetProblems() {
     })
 }
 
-if (run) {
-    GetProblems();
-}

@@ -92,7 +92,7 @@ app.get('/selectPage', checkLogin, (req, res, next) => {
 app.use('/', loginRoutes);
 
 //User Routes
-app.use('/users', userRoutes); 
+app.use('/users', userRoutes);
 
 //Posts Routes
 app.use('/posts', postRoutes);
@@ -100,17 +100,16 @@ app.use('/posts', postRoutes);
 // Comments Routes
 app.use('/posts/:pid/comments', commentRoutes);
 
-app.get('/cp', async (req, res, next) => {
-
-    const problems=await axios.get('https://codeforces.com/api/problemset.problems');
-    // console.log(problems.data.result.problems);
-    for (let problem of problems.data.result.problems) {
-        if (problem&&problem.rating&&problem.rating==1000) {
-            console.log(problem);
-        }
-    }
-    res.send('Ok!');
-}); 
+app.get('/cp', checkLogin, async (req, res, next) => {
+    const curuser=await User.findById(req.user.id);
+    res.render('CP', { curuser });
+});
+const partialSearch=require('./utils/partialSearch');
+app.get('/search', async (req, res, next) => {
+    const search=req.query.search;
+    const findResult=partialSearch(search);
+    res.send(findResult);
+});
 app.use((err, req, res, next) => {
     let { status=500, message="Error Occurred!" }=err;
     console.log(err);

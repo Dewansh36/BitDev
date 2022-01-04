@@ -32,7 +32,7 @@ module.exports.register=async (req, res, next) => {
             {
                 username: req.body.username,
                 email: req.body.email,
-                displayname: req.body.firstname+req.body.lastname,
+                displayname: req.body.firstname+" "+req.body.lastname,
                 collegename: req.body.collegename,
                 cfhandle: req.body.codeforces,
                 cchandle: req.body.codechef,

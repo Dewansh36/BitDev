@@ -4,14 +4,13 @@ const express=require('express');
 
 module.exports.renderEdit=async (req, res, next) => {
     let { id }=req.params;
-    const user=await User.findById(id);
-    res.render('users/edit', { user });
+    const curuser=await User.findById(id);
+    res.render('users/edit', { curuser });
 }
 
-module.exports.profile=async (req, res, next) => {
-
+module.exports.getFriends=async (req, res, next) => {
     let { id }=req.params;
-    const user=await User.findById(id)
+    const curuser=await User.findById(id)
         .populate(
             {
                 path: 'posts'
@@ -22,8 +21,28 @@ module.exports.profile=async (req, res, next) => {
                 path: 'friends'
             }
         );
-    res.send(user);
+    // res.send(user);
+    res.render('users/friends', { curuser });
     // this is the real One res.render('/users/profile', { user });
+}
+
+module.exports.profile=async (req, res, next) => {
+
+    let { id }=req.params;
+    const curuser=await User.findById(id)
+        .populate(
+            {
+                path: 'posts'
+            }
+        )
+        .populate(
+            {
+                path: 'friends'
+            }
+        );
+    // res.render;
+    console.log(curuser);
+    res.render('users/profilepage', { curuser });
 }
 
 module.exports.edit=async (req, res, next) => {
