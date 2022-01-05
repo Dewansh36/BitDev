@@ -15,6 +15,10 @@ const commentSchema=new mongoose.Schema(
         post: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Post'
+        },
+        date: {
+            type: String,
+            default: new Date(Date.now()).toDateString()+" "+new Date(Date.now()).toLocaleTimeString(),
         }
     }
 );

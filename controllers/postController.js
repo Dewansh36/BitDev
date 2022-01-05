@@ -20,10 +20,19 @@ module.exports.renderEdit=async (req, res, next) => {
 
 module.exports.view=async (req, res, next) => {
     let { id }=req.params;
+
     const post=await Post.findById(id)
-        .populate('author');
-    res.send(post);
-    // res.render('posts/displatPost', { post });
+        .populate('author')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        });
+    if (!post) {
+        throw new Error('Post not Found');
+    }
+    res.render('posts/views', { post });
 }
 
 module.exports.create=async (req, res, next) => {
@@ -33,7 +42,7 @@ module.exports.create=async (req, res, next) => {
         const post=new Post(req.body);
         post.author=user.id;
         post.likes=0;
-        post.datePosted=new Date();
+        post.datePosted=new Date(Date.now()).toDateString()+" "+new Date(Date.now()).toLocaleTimeString();
         for (let file of req.files) {
             let obj={
                 url: file.path,

@@ -16,7 +16,7 @@ router.route('/new')
     .post(checkLogin, upload.array('images'), catchAsync(postController.create));
 
 router.route('/:id')
-    .get(checkLogin, postController.view)
+    .get(checkLogin, catchAsync(postController.view))
     .put(checkLogin, postAuth, catchAsync(postController.edit))
     .delete(checkLogin, postAuth, catchAsync(postController.delete));
 

@@ -9,14 +9,14 @@ h1 {
     margin-bottom: 78px;
 }
 
-
+/* 
 div.col-12 {
     margin-top: 10px;
     margin-bottom: 50%;
     padding-top: 65px;
     
     
-}
+} */
 
 div.comment{
     border:1px solid rgb(240, 250, 240);
@@ -36,12 +36,12 @@ ui,li{
 }
 ul.loop li ul{
 border-left:1px solid white;
-position: relative;
+/* position: relative; */
 }
 ul.loop li ul ::before{
     content:'';
     border-bottom: 1px solid;
-position: absolute;
+/* position: absolute; */
 
 top: 2em;
 }

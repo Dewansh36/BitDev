@@ -32,7 +32,10 @@ module.exports.profile=async (req, res, next) => {
     const curuser=await User.findById(id)
         .populate(
             {
-                path: 'posts'
+                path: 'posts',
+                populate: {
+                    path: 'comments'
+                }
             }
         )
         .populate(
@@ -40,8 +43,14 @@ module.exports.profile=async (req, res, next) => {
                 path: 'friends'
             }
         );
+    curuser.comments=curuser.comments.filter((comment) => { return comment!=null });
+    for (let post of curuser.posts) {
+        post.comments=post.comments.filter((comment) => { return comment!=null });
+        await post.save();
+    }
+    await curuser.save();
     // res.render;
-    console.log(curuser);
+    // console.log(curuser);
     res.render('users/profilepage', { curuser });
 }
 

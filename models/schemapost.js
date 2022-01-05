@@ -40,7 +40,10 @@ const postSchema=new Schema(
                 ref: 'Comment'
             }
         ],
-        datePosted: Date,
+        datePosted: {
+            type: String,
+            default: new Date(Date.now()).toDateString()+" "+new Date(Date.now()).toLocaleTimeString(),
+        },
     }
 );
 

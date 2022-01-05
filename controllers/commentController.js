@@ -17,9 +17,8 @@ module.exports.create=async (req, res, next) => {
     await post.save();
     await user.save();
     console.log(user, post, comment);
-    res.send('Ok!');
-    // req.flash('success', 'Comment Posted Successfully!');
-    // res.redirect(`/posts/${pid}`);
+    req.flash('success', 'Comment Posted Successfully!');
+    res.redirect(`/posts/${pid}`);
 }
 
 module.exports.edit=async (req, res, next) => {
@@ -33,8 +32,12 @@ module.exports.edit=async (req, res, next) => {
 module.exports.delete=async (req, res, next) => {
     let { pid, cid }=req.params;
     const comment=await Comment.findById(cid);
-    const post=await Post.findById(pid);
-    const user=await User.findById(req.user.id);
+    const post=await Post.findById(pid)
+        .populate('comments');
+    const user=await User.findById(req.user.id)
+        .populate('comments');
+    post.comments=post.comments.filter((comment) => { return comment!=null });
+    user.comments=user.comments.filter((comment) => { return comment!=null });
     for (let i=0; i<post.comments; i++) {
         if (post.comments[i].id==comment.id) {
             post.comments.splice(i, 1);
@@ -51,6 +54,6 @@ module.exports.delete=async (req, res, next) => {
     await user.save();
     await Comment.findByIdAndDelete(cid);
     console.log(user, post, comment);
-    // req.flash('success', 'Comment Deleted Successfully!');
-    // res.redirect(`/posts/${pid}`);
+    req.flash('success', 'Comment Deleted Successfully!');
+    res.redirect(`/posts/${pid}`);
 }

@@ -73,7 +73,13 @@
           <p class="h4"> STATS </p>
           <p> friends : <%= curuser.friends.length %> </p>
           <p> posts : <%= curuser.posts.length %></p>
-          <p> comments :  </p>
+          <p> comments :
+            <% { var y = 0 ; %>
+              <% for (var mypost of curuser.posts) { %>  
+                <% y = y + mypost.comments.length ; %> 
+               <% } %> 
+               <%= y %> 
+               <% } %>    </p>
           <p> likes : 
             <% { var y = 0 ; %>
           <% for (var mypost of curuser.posts) { %>  
