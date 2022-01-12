@@ -4,7 +4,7 @@ module.exports=function (fn) {
     return function (req, res, next) {
         fn(req, res, next)
             .catch((err) => {
-                return next(new appError(err.message, err.status));
+                return next(err);
             });
     }
 }

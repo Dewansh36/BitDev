@@ -31,10 +31,10 @@ const userSchema=new schema({
     },
     ccrating: {
         type: String
-    }, 
+    },
     cfrating: {
         type: Number
-    }, 
+    },
     description: {
         type: String
     },

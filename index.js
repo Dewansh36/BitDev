@@ -72,6 +72,7 @@ app.use((req, res, next) => {
 
 const checkLogin=require('./middleware/checkLogin');
 
+const partialSearch=require('./utils/partialSearch');
 const loginRoutes=require('./routes/loginRoutes');
 const userRoutes=require('./routes/userRoutes');
 const postRoutes=require('./routes/postRoutes');
@@ -104,14 +105,40 @@ app.get('/cp', checkLogin, async (req, res, next) => {
     const curuser=await User.findById(req.user.id);
     res.render('CP', { curuser });
 });
-const partialSearch=require('./utils/partialSearch');
+
+app.get('/project', checkLogin, async (req, res, next) => {
+
+    let posts=[];
+    let user=await User.findById(req.user.id)
+        .populate({
+            path: 'friends',
+            populate: {
+                path: 'posts'
+            }
+        });
+    for (let frnd of user.friends) {
+        posts=posts.concat(frnd.posts);
+    }
+    const compare=(a, b) => {
+        return new Date(b.date)-new Date(a.date);
+    }
+    posts.sort(compare);
+    console.log(posts);
+    res.send('Ok!');
+})
+
 app.get('/search', async (req, res, next) => {
     const search=req.query.search;
     const findResult=partialSearch(search);
     res.send(findResult);
 });
+
 app.use((err, req, res, next) => {
     let { status=500, message="Error Occurred!" }=err;
     console.log(err);
     res.status(status).send(message);
 });
+
+app.get('*', (req, res) => {
+    res.status(404).send('404 Not Found!');
+})

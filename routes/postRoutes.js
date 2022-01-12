@@ -20,6 +20,12 @@ router.route('/:id')
     .put(checkLogin, postAuth, catchAsync(postController.edit))
     .delete(checkLogin, postAuth, catchAsync(postController.delete));
 
+router.route('/:id/like')
+    .get(checkLogin, catchAsync(postController.like));
+
+router.route('/:id/dislike')
+    .get(checkLogin, catchAsync(postController.dislike));
+
 router.route('/:id/edit')
     .get(checkLogin, postAuth, postController.renderEdit);
 

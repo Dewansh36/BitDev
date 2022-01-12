@@ -25,9 +25,12 @@ const postSchema=new Schema(
         description: {
             type: String,
         },
-        likes: {
-            type: Number
-        },
+        likes: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
         techStack: {
             type: String
         },
@@ -41,8 +44,8 @@ const postSchema=new Schema(
             }
         ],
         datePosted: {
-            type: String,
-            default: new Date(Date.now()).toDateString()+" "+new Date(Date.now()).toLocaleTimeString(),
+            type: Date,
+            default: Date.now(),
         },
     }
 );

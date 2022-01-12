@@ -5,7 +5,7 @@
                 <div class="content">
                     <div class="icon">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
-                        <h4 class="card-time">15 min ago</h4>
+                        <h4 class="card-time"><%= new Date(mypost.datePosted).toDateString() %> </h4>
                     </div>
                 </div>
             </div>
@@ -19,10 +19,22 @@
                     <br>
                     <div>
                         &nbsp;&nbsp;&nbsp;
-                        <button class="button-dec">
-                            <i class="fa fa-heart" aria-hidden="true"></i>
-                            <p class="like" id="like" style="color: rgb(0, 0, 0);"> <%= mypost.likes %> </p>
-                        </button>
+                        <% if (mypost.likes.includes(user.id)==true) { %>
+                            <a href="/posts/<%= mypost.id %>/dislike ">
+                                <button class="button-dec">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <p class="like" id="like" style="color: rgb(0, 0, 0);"> <%= mypost.likes.length %> </p>
+                                </button>
+                                </a>
+                        <% } else { %>
+                            <a href="/posts/<%= mypost.id %>/like ">
+                                <button class="button-dec">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
+                                    <p class="like" id="like" style="color: rgb(0, 0, 0);"> <%= mypost.likes.length %> </p>
+                                </button>
+                                </a>
+                        <% } %>
+
                         &nbsp;&nbsp;
                         <button class="button-dec">
                             <i class="fa fa-comment" aria-hidden="true"></i>
