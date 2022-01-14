@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ccImage from '../../Public/image/cc.png'
-import cfImage from '../../Public/image/cf.png'
+import cfImage from '../../Public/image/cf.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../Public/css/CP.css'
 import { Col, Container, Row } from 'react-bootstrap';
