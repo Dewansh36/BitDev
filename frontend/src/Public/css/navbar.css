@@ -4,3 +4,17 @@
     position : relative ; 
     left : 0px;
 } 
+
+.boxshadow {
+    box-shadow: rgb(199, 199, 199) 0px 2px 10px;
+}
+
+#tlogo {
+    display: none;
+} 
+
+@media screen and (max-width: 850px) {
+    #tlogo {
+        display: block;
+    } 
+}
