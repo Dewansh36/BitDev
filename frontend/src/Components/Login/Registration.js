@@ -10,17 +10,25 @@ const Register=() => {
     const nextBtn=() => {
         console.log('Console!');
         const pages=document.querySelectorAll('.page');
+        const bar=document.querySelectorAll('.prog');
         if (pos<pages.length-1) {
             pages[pos].classList.add('hide');
             pages[pos+1].classList.remove('hide');
+            bar[pos+1].classList.add('active');
+           
             setPos(pos+1);
         }
+        
+        
     }
     const prevBtn=() => {
         const pages=document.querySelectorAll('.page');
+        const bar=document.querySelectorAll('.prog');
+        console.log(bar);
         if (pos>0) {
             pages[pos].classList.add('hide');
             pages[pos-1].classList.remove('hide');
+            bar[pos].classList.remove('active');
             setPos(pos-1);
         }
     }
@@ -28,9 +36,9 @@ const Register=() => {
         <div>
             <form action="/register" id="msform" method="post">
                 <ul id="progressbar">
-                    <li className="active">Account Setup</li>
-                    <li>Social Profiles</li>
-                    <li>Personal Details</li>
+                    <li className="prog active">Account Setup</li>
+                    <li className='prog'>Social Profiles</li>
+                    <li className='prog'>Personal Details</li>
                 </ul>
                 <fieldset className='page'>
 
