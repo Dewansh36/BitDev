@@ -8,6 +8,7 @@ import Login from './Components/Login/Login';
 import Register from './Components/Login/Registration';
 import Navbar from './Components/navbar/navbar'
 import Footer from './Components/footer/footer'
+import Profile from './Components/User/Profile';
 
 function App() {
   return (
