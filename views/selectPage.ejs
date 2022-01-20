@@ -1,34 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="css/SecondPage.css">
 
     <!-- favicon -->
     <!-- <link rel="icon" href="favicon2.ico"> -->
 
     <!-- bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
     <!-- google font -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
-        rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+    rel="stylesheet">
 
     <!-- font awesome icons -->
     <script src="https://kit.fontawesome.com/7296bf4925.js" crossorigin="anonymous"></script>
@@ -38,76 +30,63 @@
 
     <title>BitDev</title>
 </head>
-
 <body>
-    <%- include('partials/flash') %>
-    <%- include('./partials/navbar') %> 
-        <section id="title">
-            <!-- Nav Bar -->
-            <div class="container-fluid">
-                <!-- <nav class="navbar  navbar-expand-lg navbar-dark">
-                    <a class="navbar-brand" href=""><img src="image/picture1.png" alt="" class="LogoImage"></a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav m-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/users/<%= user.id %>">
-                                    <%= user.username %>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="about.html">About Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav> -->
-        </section>
-        <section id="Description">
-            <div class="row">
-                <div class="col-lg-6 separate col-md-12">
-                    <h1 class="fix">Today is a great day to CODE.</h1>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">For Developers</h5>
-                                    <p class="card-text">Upload projects and check out others projects, make
-                                        friends
-                                        working
-                                        in same domain.</p>
-                                    <a href="Developer.html" class="card-link">Click here</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">CP Enthusiasts</h5>
-                                    <p class="card-text">Get all the data about your rating and get recommended
-                                        problems
-                                        based on your rating . </p>
-                                    <a href="/cp" class="card-link">Click here</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-12">
-                    <img src="image/SelectPageImage.png" alt="iphone-mockup" class="title-img">
-                </div>
+    <section id="title">
+        <!-- Nav Bar -->
+        <div class="container-fluid">
+          <nav class="navbar  navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href=""><img src="image/picture1.png" alt="" class="LogoImage"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="profile.html"><!-- username from backend-->username</a> 
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="home.html">Logout</a>
+                </li>
+              </ul>
             </div>
+          </nav>
+    </section>
+    <section id="Description">
+          <div class="row">
+            <div class="col-lg-6 separate col-md-12">
+              <h1 class="fix">Today is a great day to CODE.</h1>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">For Developers</h5>
+                      <p class="card-text">Upload projects and check out others projects, make friends working in same domain.</p>
+                      <a href="Developer.html" class="card-link">Click here</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">CP Enthusiasts</h5>
+                      <p class="card-text">Get all the data about your rating and get recommended problems based on your rating . </p>
+                      <a href="CP.html" class="card-link">Click here</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
-        <section id="footer">
-            <%- include('partials/footer')%>
-        </section>
+            <div class="col-lg-6 col-md-12">
+              <img src="image/SelectPageImage.png" alt="iphone-mockup" class="title-img">
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="footer">
+        <%- include('partials/footer')%>
+      </section>
 </body>
-
 </html>
