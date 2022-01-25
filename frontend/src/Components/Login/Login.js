@@ -4,10 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import '../../Public/css/registration.css'
 // import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login=() => {
     const [password, setPassword]=useState('');
-
+    const notify = () => toast("Wow so easy!");
     const verify=(e) => {
 
         setPassword(e.target.value);
@@ -28,7 +29,7 @@ const Login=() => {
                     <h3 className="fs-subtitle">Login to your account</h3>
                     <input type="text" name="username" placeholder="Username"></input>
                     <input type="password" name="password" value={password} placeholder="Password" onChange={verify} />
-                    <button className="action-button">
+                    <button className="action-button"onClick={notify}>
                         Submit
                     </button>
                     <div id='pop-up'>
@@ -43,6 +44,7 @@ const Login=() => {
                     </h3>
                 </fieldset>
             </form>
+            <ToastContainer position='top-center'/>
         </div>
 
 
