@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../../Public/css/registration.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loading from '../../Components/Loading'
+import Loading from '../loading'
 import { useNavigate } from 'react-router-dom';
 
 const initialState={

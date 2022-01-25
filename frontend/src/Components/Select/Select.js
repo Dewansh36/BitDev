@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
 import '../../Public/css/SecondPage.css'
 import SelectPageImage from '../../Public/image/SelectPageImage.png'
-import Loading from '../Loading';
+import Loading from '../loading';
 import Navbar from '../navbar/navbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

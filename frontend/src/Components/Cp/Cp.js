@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Loading from '../Loading'
+import Loading from '../loading'
 import ccImage from '../../Public/image/cc.png'
 import cfImage from '../../Public/image/cf.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';

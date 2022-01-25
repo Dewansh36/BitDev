@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import '../../Public/css/registration.css'
-import Loading from '../Loading'
+import Loading from '../loading'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
