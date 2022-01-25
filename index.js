@@ -5,7 +5,9 @@ const app=express();
 const localStrat=require('passport-local');
 const User=require('./models/schemauser');
 const Post=require('./models/schemapost');
-app.use(express.urlencoded({ extended: true }));
+const bodyParser=require('body-parser');
+app.use(bodyParser.json()); // <--- Here
+app.use(bodyParser.urlencoded({ extended: true }));
 const path=require('path');
 const ejsmate=require('ejs-mate');
 const flash=require('connect-flash');
@@ -15,6 +17,9 @@ const axios=require('axios');
 require('dotenv').config();
 const multer=require('multer');
 require('dotenv').config();
+const cors=require('cors');
+
+app.use(cors());
 //Setting Up mongoose
 async function main() {
     await mongoose.connect('mongodb://localhost:27017/BitDev');
@@ -38,8 +43,9 @@ app.set('views', path.join(__dirname, 'views'));
 //For adding static file's like css and images etc
 app.use(express.static(path.join(__dirname, '/public')));
 
-app.listen(3000, () => {
-    console.log('listning!');
+const port=4000;
+app.listen(port, () => {
+    console.log(`Listning on ${port}!`);
 });
 
 //setting up sessions

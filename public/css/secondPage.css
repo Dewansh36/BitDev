@@ -5,9 +5,9 @@ body{
     font-weight: 400;
   }
   
-  /* .container-fluid{
+  .container-fluid{
     padding: 3% 15% 0;
-  } */
+  }
   
   h1{
     font-family: "Montserrat";
@@ -38,7 +38,7 @@ body{
   
   /* navigation bar */
   
-  /* .navbar{
+  .navbar{
     padding: 0;
   }
   
@@ -60,7 +60,7 @@ body{
     font-size: 1.2rem;
     font-family: "Montserrat light";
     font-weight: bold;
-  } */
+  }
 
   #Description{
     padding: 0 10% 7% 15%;
