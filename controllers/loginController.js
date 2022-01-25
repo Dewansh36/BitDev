@@ -1,6 +1,6 @@
 const User=require('../models/schemauser');
 const passport=require('passport');
-const localStrat=require('passport-local');
+const localStrat=require('passport-local').Strategy;
 const express=require('express');
 const { nanoid }=require('nanoid');
 const nodemailer=require('nodemailer');
@@ -13,74 +13,43 @@ const transporter=nodemailer.createTransport(
         }
     }
 );
-
-module.exports.renderLogin=(req, res) => {
-    res.render('users/login');
-}
-
-module.exports.renderRegister=(req, res) => {
-    res.render('users/registration');
-}
-
 module.exports.register=async (req, res, next) => {
-    try {
-        if (req.body.password!=req.body.cpass) {
-            req.flash('error', 'Password And Confirm Password Mismatch!');
-            res.redirect('/register');
+    const user=new User(
+        {
+            username: req.body.username,
+            email: req.body.email,
+            displayname: req.body.firstname+" "+req.body.lastname,
+            collegename: req.body.collegename,
+            cfhandle: req.body.codeforces,
+            cchandle: req.body.codechef,
+            description: req.body.description
         }
-        const user=new User(
-            {
-                username: req.body.username,
-                email: req.body.email,
-                displayname: req.body.firstname+" "+req.body.lastname,
-                collegename: req.body.collegename,
-                cfhandle: req.body.codeforces,
-                cchandle: req.body.codechef,
-                description: req.body.description
-            }
-        );
-        // console.log(req.body);
-        // console.log(newUser, req.body);
+    );
+    // console.log(req.body);
+    // console.log(newUser, req.body);
 
-        const regUser=await User.register(user, req.body.password);
+    const regUser=await User.register(user, req.body.password);
 
-        console.log(regUser);
+    console.log(regUser);
 
-        req.logIn(regUser, (err) => {
-            if (err) {
-                console.log(err);
-                req.flash('error', err.message);
-                res.redirect('/login');
-            }
-        });
-        req.flash('success', 'Successfully Registered!');
-        if (req.session.returnTo) {
-            res.redirect(req.session.returnTo);
-        }
-        else {
-            res.redirect('/selectPage');
-        }
-    }
-    catch (err) {
-        console.log(err);
-        req.flash('error', err.message);
-        res.redirect('/register');
-    }
+    res.send({ success: 'Successfully Registered!' });
 }
 
 module.exports.login=async (req, res, next) => {
-    req.flash('success', 'Welcome Back!');
-    if (req.session.returnTo) {
-        res.redirect(req.session.returnTo);
-    }
-    else {
-        res.redirect('/selectPage');
-    }
+    // console.log(req.user);
+    res.send({
+        user: req.user,
+        success: "Welcome Back!"
+    });
 }
 
-
-module.exports.renderForgot=(req, res, next) => {
-    res.render('users/forgot');
+module.exports.getUser=async (req, res, next) => {
+    // console.log(req.user);
+    if (req.user==undefined) {
+        res.send({ error: 'You Must be Logged In!' });
+        return;
+    }
+    res.send({ user: req.user });
 }
 
 module.exports.forgot=async (req, res, next) => {
@@ -162,20 +131,10 @@ module.exports.reset=async (req, res, next) => {
             res.redirect('/login');
         }
     })
-    // if (err) {
-    //     req.flash('error', 'Password Reset Failed!');
-    //     res.redirect('/forgot');
-    // }
-    // else {
-    //     
-    // }
-
 }
 
 
 module.exports.logout=(req, res, next) => {
     req.logOut();
-    req.session.returnTo=null;
-    req.flash('success', 'Aloha! See You Soon');
-    res.redirect('/');
+    res.send({ success: 'Aloha! See you Soon!' });
 }
