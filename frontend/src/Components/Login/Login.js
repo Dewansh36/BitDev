@@ -1,37 +1,56 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import '../../Public/css/registration.css'
+import Loading from '../loading'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 const Login=() => {
+    const navigate=useNavigate();
     const [password, setPassword]=useState('');
     const [username, setUsername]=useState('');
+    const [loading, setLoading]=useState(false);
+
+    const notify=(message, type) => toast(`${message}`, { type: type });
+
     const verify=(e) => {
         setPassword(e.target.value);
     }
+
     const check=(e) => {
         e.preventDefault();
         if (password.length<4) {
             console.log("error");
             return;
         }
-        console.log(
-            {
-                username: username,
-                password: password
-            }
-        );
+        setLoading(true);
         axios.post('http://localhost:4000/login', {
             username: username,
             password: password
-        }).then((response) => {
-            console.log(response.data);
+        }, { withCredentials: true }).then((response) => {
+            let { success, error, user }=response.data;
+            if (error!=undefined) {
+                notify(error, "error");
+            }
+            else {
+                navigate('/selectPage');
+            }
+            setLoading(false);
+
         })
             .catch((err) => {
-                console.log(err);
+                notify(err.message);
+                setLoading(false);
             })
+    }
+    if (loading==true) {
+        return (
+            <Loading />
+        )
     }
     return (
 
@@ -53,9 +72,8 @@ const Login=() => {
                     </h3>
                 </fieldset>
             </form>
+            <ToastContainer position='top-center' />
         </div>
-
-
     )
 }
 

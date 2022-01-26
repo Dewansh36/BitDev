@@ -8,23 +8,28 @@ const checkLogin=require('../middleware/checkLogin');
 const catchAsync=require('../middleware/catchAsync');
 
 router.route('/register')
-    .get(loginController.renderRegister)
     .post(catchAsync(loginController.register));
 
 router.route('/login')
-    .get(loginController.renderLogin)
-    .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), loginController.login);
+    .post(passport.authenticate('local', { failureFlash: true, failureRedirect: '/loginFail' }), loginController.login);
+
+
+router.route('/getUser')
+    .get(loginController.getUser);
 
 router.route('/logout')
     .get(checkLogin, loginController.logout);
 
 router.route('/forgot')
-    .get(loginController.renderForgot)
     .post(loginController.forgot);
 
 router.route('/reset/:token')
-    .get(loginController.renderReset)
+    // .get(loginController.renderReset)
     .post(loginController.reset);
 
+router.route('/loginFail')
+    .get((req, res, next) => {
+        res.send({ error: req.flash('error') });
+    })
 
 module.exports=router;

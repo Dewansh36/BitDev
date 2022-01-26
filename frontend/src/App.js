@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 // import './App.css';
 import { BrowserRouter as Router, Routes, Route }
   from 'react-router-dom';
@@ -6,22 +5,20 @@ import Home from './Components/Home/Home';
 import CP from './Components/Cp/Cp'
 import Login from './Components/Login/Login';
 import Register from './Components/Login/Registration';
-import Navbar from './Components/navbar/navbar'
 import Footer from './Components/footer/footer'
-import Profile from './Components/User/Profile';
-
+import Select from './Components/Select/Select'
+import Profile from './Components/User/Profile'
 function App() {
   return (
     <Router>
-      <Navbar />
-      <div style={{ minHeight: "100vh" }}>
+      <div style={{ minHeight: '100vh' }}>
         <Routes>
           <Route exact path='/' element={<Home />} />
           <Route path='/cp' element={<CP />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/registration' element={<Register />} />
-          {/* <Route path='/navbar' element={<Navbar />} />
-        <Route path='/footer' element={<Footer />} /> */}
+          <Route path='/register' element={<Register />} />
+          <Route path='/selectPage' element={<Select />} />
+          <Route path='/users/:id' element={<Profile />} />
         </Routes>
       </div>
       <Footer />
