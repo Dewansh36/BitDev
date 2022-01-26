@@ -24,8 +24,9 @@ const callApi=async (url) => {
     const response=await axios.get(url);
     return response.data;
 }
+
 function Cp() {
-    let rpRating=800;
+    let rpRating=-1;
     const [cfdata, setcfData]=useState({});
     const [ccdata, setccData]=useState({});
     const [Upcomingdata, setUpcomingData]=useState({});
@@ -59,8 +60,8 @@ function Cp() {
 
     useEffect(async () => {
         Promise.all([
-            callApi('https://competitive-programming-score.herokuapp.com/api/codeforces/Dewansh05'),
-            callApi('https://competitive-programming-score.herokuapp.com/api/codechef/dewansh_36'),
+            callApi(cfurl),
+            callApi(ccurl),
             callApi('https://codeforces.com/api/contest.list?gym=false'),
             callApi('https://codeforces.com/api/problemset.problems'),
         ]).then((values) => {
@@ -71,6 +72,7 @@ function Cp() {
             setUpcomingData(values[2]);
             rpRating=cfdata.rating;
             setLoading(false);
+            console.log(rpRating);
         })
             .catch((err) => {
                 console.log(err);
@@ -144,6 +146,7 @@ function Cp() {
             else
                 rpRating=3400;
             let y=0;
+            console.log(rpRating);
             for (let problem of Problemdata.result.problems) {
                 if (problem&&problem.rating&&problem.rating==rpRating) {
                     let u="https://codeforces.com/problemset/problem/"+problem.contestId+"/"+problem.index;
@@ -159,7 +162,7 @@ function Cp() {
                         pn3=problem.name;
                         pl3=u;
                     }
-                    x++;
+                    y++;
                 }
                 if (y==3)
                     break;
@@ -176,11 +179,12 @@ function Cp() {
     if (loading==true) {
         return (
             <Loading />
+
         )
     }
     else if (error=='') {
         return (
-            <div>
+            <div className="CPbody">
                 <section id="stats">
                     <Container>
                         <Row>
@@ -236,3 +240,4 @@ function Cp() {
 }
 
 export default Cp
+
