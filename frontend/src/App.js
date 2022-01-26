@@ -8,6 +8,8 @@ import Register from './Components/Login/Registration';
 import Footer from './Components/footer/footer'
 import Select from './Components/Select/Select'
 import Profile from './Components/User/Profile'
+import Project from './Components/Project/Project'
+
 function App() {
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/selectPage' element={<Select />} />
           <Route path='/users/:id' element={<Profile />} />
+          <Route path='/posts' element={<Project />} />
         </Routes>
       </div>
       <Footer />
