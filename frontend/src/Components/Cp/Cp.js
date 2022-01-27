@@ -202,23 +202,33 @@ function Cp() {
                             <Col lg={6} md={12} className='stats'>
                                 <h1 className="heading">CP Stats</h1>
                                 <div className="cf">
-                                    <img className="logo_pic" src={cfImage} alt="codeforces" />
-                                    <p>
-                                        <h2>Codeforces</h2>
-                                        <h3 className="resFix"> {cfname} <span id="cfhandle"></span></h3>
-                                        <h3 className="resFix">Current rating - {cfdata.rating} <span id="cfrating"></span> </h3>
-                                        <h3 className="resFix">Current rank -{cfdata.rank} <span id="cfcrank"></span></h3>
-                                        <h3 className="resFix">Max rating - {cfdata["max rating"]} <span id="cfmrating"></span></h3>
-                                    </p>
+                                    <div className='cfImg'>
+                                        <img className="logo_pic" src={cfImage} alt="codeforces" />
+                                    </div>
+                                    <div className='cfDetails'>
+                                        <p>
+                                            <h2>Codeforces</h2>
+                                            <h3 className="resFix"><a href={`https://codeforces.com/profile/${cfname}`}>{cfname}</a> <span id="cfhandle"></span></h3>
+                                            <h3 className="resFix">Current rating - {cfdata.rating} <span id="cfrating"></span> </h3>
+                                            <h3 className="resFix">Current rank -{cfdata.rank} <span id="cfcrank"></span></h3>
+                                            <h3 className="resFix">Max rating - {cfdata["max rating"]} <span id="cfmrating"></span></h3>
+                                        </p>
+                                    </div>
                                 </div>
+                                <div className="cf">
+                                    <div className='cfImg'>
                                 <img className="logo_pic" src={ccImage} alt="codechef" />
+                                </div>
+                                <div className='cfDetails'>
                                 <p>
                                     <h2>Codechef</h2>
-                                    <h3 className="resFix"> {ccname} <span id="cchandle"></span></h3>
+                                    <h3 className="resFix"><a href={`https://codechef.com/users/${ccname}`}>{ccname}</a><span id="cchandle"></span></h3>
                                     <h3 className="resFix">Current rating - {ccdata.rating} <span id="ccrating"></span></h3>
                                     <h3 className="resFix">Current rank - {ccdata.stars} <span id="cccrank"></span></h3>
                                     <h3 className="resFix">Max rating - {ccdata.highest_rating} <span id="ccmrating"></span></h3>
                                 </p>
+                                </div>
+                                </div>
                             </Col>
                             <Col lg={6} md={12} className='left-border'>
                                 <div className="bottom-border">
