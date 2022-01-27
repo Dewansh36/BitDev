@@ -34,7 +34,7 @@ function Cp() {
     const [loading, setLoading]=useState(true);
     const [error, setError]=useState('');
     const ccname="dewansh_36";
-    const cfname="Dewansh05";
+    const cfname="tourist";
     const ccurl="https://competitive-programming-score.herokuapp.com/api/codechef/"+ccname;
     const cfurl="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfname;
     let cn1, cn2, cn3, cl1, cl2, cl3, ct1, ct2, ct3;
@@ -59,20 +59,30 @@ function Cp() {
     // }, [])
 
     useEffect(async () => {
-        Promise.all([
+        await Promise.all([
             callApi(cfurl),
             callApi(ccurl),
             callApi('https://codeforces.com/api/contest.list?gym=false'),
             callApi('https://codeforces.com/api/problemset.problems'),
         ]).then((values) => {
-            console.log(values);
+            console.log(1);
+            // console.log(values);
             setcfData(values[0]);
             setccData(values[1]);
-            setProblemData(values[3]);
             setUpcomingData(values[2]);
             rpRating=cfdata.rating;
-            setLoading(false);
             console.log(rpRating);
+        })
+            .catch((err) => {
+                console.log(err);
+                setError('Something Went Wrong!');
+            })
+        await Promise.all([
+            callApi('https://codeforces.com/api/problemset.problems'),
+        ]).then((values) => {
+            console.log(2);
+            setProblemData(values[0]);
+            setLoading(false);
         })
             .catch((err) => {
                 console.log(err);
@@ -80,8 +90,9 @@ function Cp() {
                 setLoading(false);
             })
     }, [])
-    if (Upcomingdata.result!=undefined) {
-        console.log(Upcomingdata);
+    if (cfdata.rating!=undefined&&Upcomingdata.result!=undefined&&Problemdata.result!=undefined) {
+        // console.log(Upcomingdata);
+        rpRating=cfdata.rating;
         let x=0;
         while (Upcomingdata.result[x].phase=="BEFORE")
             x++;
