@@ -9,6 +9,7 @@ import Footer from './Components/footer/footer'
 import Select from './Components/Select/Select'
 import Profile from './Components/User/Profile'
 import Project from './Components/Project/Project'
+import Editor from './Components/Editor/Editor'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='/selectPage' element={<Select />} />
           <Route path='/users/:id' element={<Profile />} />
           <Route path='/posts' element={<Project />} />
+          <Route path='/editor' element={<Editor />} />
         </Routes>
       </div>
       <Footer />
