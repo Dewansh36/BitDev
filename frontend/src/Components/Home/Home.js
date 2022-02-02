@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import ParticleBackground from './components/ Particlebackground'
+import ParticleBackground from './Particlebackground'
 import Header from "./Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import{Grid,Row,Col, Container}  from "react-bootstrap"

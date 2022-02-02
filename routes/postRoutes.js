@@ -10,7 +10,8 @@ const catchAsync=require('../middleware/catchAsync');
 const checkLogin=require('../middleware/checkLogin');
 const postAuth=require('../middleware/postAuth');
 
-
+router.route('/').get(postController.getAllPosts
+    )
 router.route('/new')
     .get(checkLogin, postController.renderCreate)
     .post(checkLogin, upload.array('images'), catchAsync(postController.create));

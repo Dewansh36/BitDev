@@ -1,9 +1,35 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../Public/css/post.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { regisPost } from '../../actions/postAction';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Post() {
+  const dispatch = useDispatch()
+  const [title,setTitle] =useState('')
+  const [images,setImage] =useState([])
+  const [description,setDescription] =useState('')
+  const [techStack,settechStack] = useState('')
+  const notify=(message, type) => toast(`${message}`, { type: type });
+  const fileSelectedHandler = (event) => {
+    setImage(event.target.files)
+    console.log(event.target.files)
+    console.log(images)
+  }
+  const registerPost =(e)=>{
+    e.preventDefault();
+    const postData={
+      title,
+      description,
+      techStack,
+      images
+    }
+    dispatch(regisPost(postData))
+  }
   return <div>
         <div className="background">
   <div className="container">
@@ -34,25 +60,25 @@ function Post() {
           </div>
         </div>
         <div className="screen-body-item">
-          <form className="app-form">
+          <form className="app-form" encType='multipart/form-data' onSubmit={registerPost}> 
             <div className="app-form-group">
-              <input className="app-form-control" placeholder="NAME" value="Parthiv Sarkar" />
+              <input className="app-form-control" placeholder="AUTHOR" name='author' />
             </div>
             <div className="app-form-group">
-              <input className="app-form-control" placeholder="Post-Name" required/>
+              <input className="app-form-control" placeholder="Post-Title" name="title" value={title} onChange={(e)=>setTitle(e.target.value)} required/>
             </div>
             <div className="app-form-group message">
-              <textarea className="app-form-control" placeholder="Post-Description"/>
+              <textarea className="app-form-control" placeholder="Post-Description" name="description" value={description} onChange={(e)=>setDescription(e.target.value)}/>
             </div>
             <div className="app-form-group ">
-              <input className="app-form-control" placeholder="Tech-Stack"/>
+              <input className="app-form-control" placeholder="Tech-Stack" name="techStack" value={techStack} onChange={(e)=>settechStack(e.target.value)}/>
             </div>
             <div className="app-form-group">
-                <input className='app-form-control' type="file" multiple />
+                <input className='app-form-control' type="file" name="images" multiple onChange={fileSelectedHandler}/>
             </div>
             <div className="app-form-group buttons">
               <button className="app-form-button">CANCEL</button>
-              <button className="app-form-button">SEND</button>
+              <button className="app-form-button" type='submit'>SEND</button>
             </div>
           </form>
         </div>
@@ -61,7 +87,7 @@ function Post() {
     
   </div>
 </div>
-
+<ToastContainer position='top-center' />
   </div>;
 }
 

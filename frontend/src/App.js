@@ -1,7 +1,7 @@
 // import './App.css';
 import { BrowserRouter as Router, Routes, Route }
   from 'react-router-dom';
-import Home from './Components/Home/Home';
+// import Home from './Components/Home/Home';
 import CP from './Components/Cp/Cp'
 import Login from './Components/Login/Login';
 import Register from './Components/Login/Registration';
@@ -10,13 +10,13 @@ import Select from './Components/Select/Select'
 import Profile from './Components/User/Profile'
 import Project from './Components/Project/Project'
 import Editor from './Components/Editor/Editor'
+import Post from './Components/post/Post'
 
 function App() {
   return (
     <Router>
       <div style={{ minHeight: '100vh' }}>
         <Routes>
-          <Route exact path='/' element={<Home />} />
           <Route path='/cp' element={<CP />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -24,6 +24,7 @@ function App() {
           <Route path='/users/:id' element={<Profile />} />
           <Route path='/posts' element={<Project />} />
           <Route path='/editor' element={<Editor />} />
+          <Route path='/createPost' element={<Post />} />
         </Routes>
       </div>
       <Footer />
