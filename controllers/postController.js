@@ -3,19 +3,25 @@ const Post=require('../models/schemapost');
 const express=require('express');
 const multer=require('multer');
 
-
-module.exports.renderCreate=(req, res, next) => {
-    res.render('posts/create');
-}
-
-module.exports.renderEdit=async (req, res, next) => {
-    let { id }=req.params;
-    const post=await Post.findById(id).populate('author');
-    if (post.author.id!=req.user.id) {
-        req.flash('error', 'You Cant Edit Others Posts');
-        res.redirect(`/posts/${id}`);
+module.exports.home=async (req, res, next) => {
+    const user=await User.findById(req.user.id)
+        .populate({
+            path: 'friends',
+            populate: {
+                path: 'posts'
+            }
+        }
+        );
+    const reqPosts=[];
+    for (let friend of user.friends) {
+        for (let post of friend.posts) {
+            reqPosts.push(post);
+        }
     }
-    res.render('posts/edit', { post });
+    reqPosts.sort((a, b) => {
+        return a.datePosted<b.datePosted;
+    });
+    res.send({ success: "Enjoy Your Updated Feed!", posts: reqPosts });
 }
 
 module.exports.view=async (req, res, next) => {
@@ -36,10 +42,9 @@ module.exports.view=async (req, res, next) => {
 
 module.exports.create=async (req, res, next) => {
     const user=await User.findById(req.user.id);
-    // res.send(user);
     const post=new Post(req.body);
     post.author=user.id;
-    post.likes=0;
+    // post.likes=0;
     post.datePosted=Date.now();
     for (let file of req.files) {
         let obj={
@@ -53,8 +58,9 @@ module.exports.create=async (req, res, next) => {
     await post.save();
     await user.save();
     console.log(post, user);
-    req.flash('success', 'Posted Successfully!');
-    res.redirect(`/posts/${post.id}`);
+    res.send({ success: 'post created successfully!', post: post });
+    // req.flash('success', 'Posted Successfully!');
+    // res.redirect(`/posts/${post.id}`);
 }
 
 module.exports.edit=async (req, res, next) => {
