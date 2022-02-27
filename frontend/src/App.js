@@ -1,7 +1,7 @@
 // import './App.css';
 import { BrowserRouter as Router, Routes, Route }
   from 'react-router-dom';
-// import Home from './Components/Home/Home';
+import Home from './Components/Home/Home';
 import CP from './Components/Cp/Cp'
 import Login from './Components/Login/Login';
 import Register from './Components/Login/Registration';
@@ -16,6 +16,7 @@ function App() {
     <Router>
       <div style={{ minHeight: '100vh' }}>
         <Routes>
+          <Route exact path='/' element={<Home />} />
           <Route path='/cp' element={<CP />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
