@@ -49,7 +49,28 @@ module.exports.getUser=async (req, res, next) => {
         res.send({ error: 'You Must be Logged In!' });
         return;
     }
-    res.send({ user: req.user });
+    let id=req.user.id;
+    const curuser=await User.findById(id)
+        .populate(
+            {
+                path: 'posts',
+                populate: {
+                    path: 'comments'
+                }
+            }
+        )
+        .populate(
+            {
+                path: 'friends'
+            }
+        );
+    // curuser.comments=curuser.comments.filter((comment) => { return comment!=null });
+    // for (let post of curuser.posts) {
+    //     post.comments=post.comments.filter((comment) => { return comment!=null });
+    //     await post.save();
+    // }
+    // await curuser.save();
+    res.send({ user: curuser });
 }
 
 module.exports.forgot=async (req, res, next) => {

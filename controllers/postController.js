@@ -39,20 +39,31 @@ module.exports.view=async (req, res, next) => {
     res.render('posts/views', { post });
     return;
 }
+module.exports.getAllPosts=async (req, res, next) => {
+    const posts=await Post.find().limit(6)
 
+    res.json({
+        success: true,
+        posts,
+        postsCount: 6
+    })
+}
 module.exports.create=async (req, res, next) => {
+    console.log(req.user.id)
+    console.log(req.body)
+    console.log(req.files)
     const user=await User.findById(req.user.id);
     const post=new Post(req.body);
     post.author=user.id;
     // post.likes=0;
     post.datePosted=Date.now();
-    for (let file of req.files) {
-        let obj={
-            url: file.path,
-            filename: file.filename
-        }
-        post.images.push(obj);
-    }
+    // for (let file of req.files) {
+    //     let obj={
+    //         url: file.path,
+    //         filename: file.filename
+    //     }
+    //     post.images.push(obj);
+    // }
     await post.populate('author');
     user.posts.push(post);
     await post.save();
