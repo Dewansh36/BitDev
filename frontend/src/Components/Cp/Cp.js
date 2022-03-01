@@ -3,7 +3,7 @@ import Loading from '../loading'
 import ccImage from '../../Public/image/cc.png'
 import cfImage from '../../Public/image/cf.jpg'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../Public/css/CP.css'
+import Styles from '../../Public/css/CP.module.css'
 import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -34,7 +34,7 @@ function Cp() {
     const [loading, setLoading]=useState(true);
     const [error, setError]=useState('');
     const ccname="dewansh_36";
-    const cfname="tourist";
+    const cfname="Dewansh05";
     const ccurl="https://competitive-programming-score.herokuapp.com/api/codechef/"+ccname;
     const cfurl="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfname;
     let cn1, cn2, cn3, cl1, cl2, cl3, ct1, ct2, ct3;
@@ -59,30 +59,20 @@ function Cp() {
     // }, [])
 
     useEffect(async () => {
-        await Promise.all([
+        Promise.all([
             callApi(cfurl),
             callApi(ccurl),
             callApi('https://codeforces.com/api/contest.list?gym=false'),
             callApi('https://codeforces.com/api/problemset.problems'),
         ]).then((values) => {
-            console.log(1);
-            // console.log(values);
+            console.log(values);
             setcfData(values[0]);
             setccData(values[1]);
+            setProblemData(values[3]);
             setUpcomingData(values[2]);
             rpRating=cfdata.rating;
-            console.log(rpRating);
-        })
-            .catch((err) => {
-                console.log(err);
-                setError('Something Went Wrong!');
-            })
-        await Promise.all([
-            callApi('https://codeforces.com/api/problemset.problems'),
-        ]).then((values) => {
-            console.log(2);
-            setProblemData(values[0]);
             setLoading(false);
+            console.log(rpRating);
         })
             .catch((err) => {
                 console.log(err);
@@ -90,9 +80,8 @@ function Cp() {
                 setLoading(false);
             })
     }, [])
-    if (cfdata.rating!=undefined&&Upcomingdata.result!=undefined&&Problemdata.result!=undefined) {
-        // console.log(Upcomingdata);
-        rpRating=cfdata.rating;
+    if (Upcomingdata.result!=undefined) {
+        console.log(Upcomingdata);
         let x=0;
         while (Upcomingdata.result[x].phase=="BEFORE")
             x++;
@@ -195,52 +184,42 @@ function Cp() {
     }
     else if (error=='') {
         return (
-            <div className="CPbody">
-                <section id="stats">
+            <div className={Styles.CPbody}>
+                <section id={Styles.stats}>
                     <Container>
                         <Row>
-                            <Col lg={6} md={12} className='stats'>
-                                <h1 className="heading">CP Stats</h1>
-                                <div className="cf">
-                                    <div className='cfImg'>
-                                        <img className="logo_pic" src={cfImage} alt="codeforces" />
-                                    </div>
-                                    <div className='cfDetails'>
-                                        <p>
-                                            <h2>Codeforces</h2>
-                                            <h3 className="resFix"><a href={`https://codeforces.com/profile/${cfname}`}>{cfname}</a> <span id="cfhandle"></span></h3>
-                                            <h3 className="resFix">Current rating - {cfdata.rating} <span id="cfrating"></span> </h3>
-                                            <h3 className="resFix">Current rank -{cfdata.rank} <span id="cfcrank"></span></h3>
-                                            <h3 className="resFix">Max rating - {cfdata["max rating"]} <span id="cfmrating"></span></h3>
-                                        </p>
-                                    </div>
+                            <Col lg={6} md={12} className={Styles.stats}>
+                                <h1 className={Styles.heading}>CP Stats</h1>
+                                <div className={Styles.cf}>
+                                    <img className={Styles.logo_pic} src={cfImage} alt="codeforces" />
+                                    <p>
+                                        <h2>Codeforces</h2>
+                                        <h3 className={Styles.resFix}> {cfname} <span id="cfhandle"></span></h3>
+                                        <h3 className={Styles.resFix}>Current rating - {cfdata.rating} <span id="cfrating"></span> </h3>
+                                        <h3 className={Styles.resFix}>Current rank -{cfdata.rank} <span id="cfcrank"></span></h3>
+                                        <h3 className={Styles.resFix}>Max rating - {cfdata["max rating"]} <span id="cfmrating"></span></h3>
+                                    </p>
                                 </div>
-                                <div className="cf">
-                                    <div className='cfImg'>
-                                <img className="logo_pic" src={ccImage} alt="codechef" />
-                                </div>
-                                <div className='cfDetails'>
+                                <img className={Styles.logo_pic} src={ccImage} alt="codechef" />
                                 <p>
                                     <h2>Codechef</h2>
-                                    <h3 className="resFix"><a href={`https://codechef.com/users/${ccname}`}>{ccname}</a><span id="cchandle"></span></h3>
-                                    <h3 className="resFix">Current rating - {ccdata.rating} <span id="ccrating"></span></h3>
-                                    <h3 className="resFix">Current rank - {ccdata.stars} <span id="cccrank"></span></h3>
-                                    <h3 className="resFix">Max rating - {ccdata.highest_rating} <span id="ccmrating"></span></h3>
+                                    <h3 className={Styles.resFix}> {ccname} <span id="cchandle"></span></h3>
+                                    <h3 className={Styles.resFix}>Current rating - {ccdata.rating} <span id="ccrating"></span></h3>
+                                    <h3 className={Styles.resFix}>Current rank - {ccdata.stars} <span id="cccrank"></span></h3>
+                                    <h3 className={Styles.resFix}>Max rating - {ccdata.highest_rating} <span id="ccmrating"></span></h3>
                                 </p>
-                                </div>
-                                </div>
                             </Col>
-                            <Col lg={6} md={12} className='left-border'>
-                                <div className="bottom-border">
-                                    <h1 className="heading2">Upcoming Contests</h1>
+                            <Col lg={6} md={12} className={Styles.leftBorder}>
+                                <div className={Styles.bottomBorder}>
+                                    <h1 className={Styles.heading2}>Upcoming Contests</h1>
                                     <a href={cl1} id="ac1" target="_blank"><h3 id="c1">{cn1}</h3></a>
-                                    <h4 id="Time1" className="time">{ct1}</h4>
+                                    <h4 id="Time1" className={Styles.time}>{ct1}</h4>
                                     <a href={cl2} id="ac2" target="_blank"><h3 id="c2">{cn2}</h3></a>
-                                    <h4 id="Time2" className="time">{ct2}</h4>
+                                    <h4 id="Time2" className={Styles.time}>{ct2}</h4>
                                     <a href={cl3} id="ac3" target="_blank"><h3 id="c3">{cn3}</h3></a>
-                                    <h4 id="Time3" className="time">{ct3}</h4>
+                                    <h4 id="Time3" className={Styles.time}>{ct3}</h4>
                                 </div>
-                                <h1 className="heading3">Recommended Problems</h1>
+                                <h1 className={Styles.heading3}>Recommended Problems</h1>
                                 <a href={pl1} id="ap1" target="_blank"><h3 id="p1">{pn1}</h3></a>
                                 <a href={pl2} id="ap2" target="_blank"><h3 id="p2">{pn2}</h3></a>
                                 <a href={pl3} id="ap3" target="_blank"><h3 id="p3">{pn3}</h3></a>

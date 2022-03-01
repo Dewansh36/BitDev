@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
-import '../../Public/css/SelectPage.css'
+import Styles from '../../Public/css/SecondPage.module.css'
 import SelectPageImage from '../../Public/image/SelectPageImage.png'
 import Loading from '../loading';
 import Navbar from '../navbar/navbar';
@@ -49,32 +49,32 @@ function Select() {
         <div>
             <Navbar user={curUser} />
             <ToastContainer position='top-center' />
-            <div className="main">
+            <div className={Styles.main}>
                 <Container>
                     <Row>
-                        <Col lg={6} md={12} className="separate">
-                            <h1 className="fix SelectH1">Today is a great day to CODE.</h1>
-                            <div className="maincontainer card1">
-                                <div className="thecard">
-                                    <div className="thefront"><div className="SelectH1 cardH1">For Developers</div>
+                        <Col lg={6} md={12} className={Styles.separate}>
+                            <h1 className={`${Styles.fix} ${Styles.SelectH1}`}>Today is a great day to CODE.</h1>
+                            <div className={`${Styles.maincontainer} ${Styles.card1}`}>
+                                <div className={Styles.thecard}>
+                                    <div className={Styles.thefront}><div className={`${Styles.cardH1} ${Styles.SelectH1}`}>For Developers</div>
                                     </div>
-                                    <div className="theback"><p className="SelectP">Upload projects and check out others projects, make friends working in same domain.</p>
-                                        <span className="SelectButton"><a href="#"></a></span>
+                                    <div className={Styles.theback}><p className={Styles.SelectP}>Upload projects and check out others projects, make friends working in same domain.</p>
+                                        <span className={Styles.SelectButton}><a href="#"></a></span>
                                     </div>
                                 </div>
                             </div>
-                            <div className="maincontainer card2">
-                                <div className="thecard">
-                                    <div className="thefront"><div className="SelectH1 cardH1">CP Enthusiasts</div>
+                            <div className={`${Styles.maincontainer} ${Styles.card2}`}>
+                                <div className={Styles.thecard}>
+                                    <div className={Styles.thefront}><div className={`${Styles.cardH1} ${Styles.SelectH1}`}>CP Enthusiasts</div>
                                     </div>
-                                    <div className="theback"><p className="SelectP">Get all the data about CP and get recommended problems based on your rating .</p>
-                                        <span className="SelectButton"><a href="#"></a></span>
+                                    <div className={Styles.theback}><p className={Styles.SelectP}>Get all the data about CP and get recommended problems based on your rating .</p>
+                                        <span className={Styles.SelectButton}><a href="#"></a></span>
                                     </div>
                                 </div>
                             </div>
                         </Col>
                         <Col lg={6} md={12}>
-                            <img src={SelectPageImage} alt="iphone-mockup" className="title-img" />
+                            <img src={SelectPageImage} alt="iphone-mockup" className={Styles["title-img"]} />
                         </Col>
                     </Row>
                 </Container>
