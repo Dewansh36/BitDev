@@ -1,4 +1,4 @@
-.container-fluid{
+.project-container-fluid{
     width: 100%;
     padding-right: 0.75rem;
     padding-left: 0.75rem;
@@ -6,7 +6,7 @@
     margin-right: auto;
     margin-left: auto;
 }
-.icon i{
+.project-icon i{
     font-size: 1.7rem;
     cursor: pointer;
 }
@@ -39,7 +39,7 @@
     }
 }
 @media screen and (max-width: 567px) {
-    .icon i{
+    .project-icon i{
         font-size: 0.7rem;
     }
     .postTitle{

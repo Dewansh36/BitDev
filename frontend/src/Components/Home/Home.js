@@ -9,35 +9,35 @@ function App() {
 
       <Header />
 
-      <h1 className="title">BITDEV</h1>
+      <h1 className="home-title">BITDEV</h1>
       <ParticleBackground></ParticleBackground>
 
-      <section className="text-center">
+      <section className="home-text-center">
         <Container>
           <Row>
             <Col lg={4}>
-              <img alt="" className="m-b-20" width="200" height="100" src="/uploadlogo.png">
+              <img alt="" className="home-m-b-20" width="200" height="100" src="/uploadlogo.png">
               </img>
-              <h6 className="block-title p-b-5">Launch Design <i className="pg-arrow_right"></i></h6>
+              <h6 className="home-block-title p-b-5">Launch Design <i className="pg-arrow_right"></i></h6>
               <h1>    </h1>
               <h1>      </h1>
 
 
-              <p className="m-b-30">awesome project for sharing website to showoff your coding skills and get to know about
+              <p className="home-m-b-30">awesome project for sharing website to showoff your coding skills and get to know about
                 current project trends</p>
             </Col>
 
             <Col lg={4}>
-              <img alt="" className="m-b-20" width="200" height="100" src="/teamlogofinal.jpg"></img>
-              <h6 className="block-title p-b-5">easy interaction<i className="pg-arrow_right"></i></h6>
-              <p className="m-b-30">add your college mates in your friend lists and interact with them easily</p>
+              <img alt="" className="home-m-b-20" width="200" height="100" src="/teamlogofinal.jpg"></img>
+              <h6 className="home-block-title p-b-5">easy interaction<i className="pg-arrow_right"></i></h6>
+              <p className="home-m-b-30">add your college mates in your friend lists and interact with them easily</p>
             </Col>
 
             <Col lg={4} >
 
-              <img alt="" className="m-b-20" width="200" height="100" src="/codeforces logo.png"></img>
-              <h6 className="block-title p-b-5">competitive programming<i className="pg-arrow_right"></i></h6>
-              <p className="m-b-30">competitive programming made easier with better interactions and uptodate competition
+              <img alt="" className="home-m-b-20" width="200" height="100" src="/codeforces logo.png"></img>
+              <h6 className="home-block-title p-b-5">competitive programming<i className="pg-arrow_right"></i></h6>
+              <p className="home-m-b-30">competitive programming made easier with better interactions and uptodate competition
                 updates</p>
             </Col>
 

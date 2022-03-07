@@ -36,12 +36,12 @@ const mystyle1={
 export default function Header() {
   return (<>
 
-    <div className="top-right" >
-      <img alt="" className="m-b-20" width="200" height="100" src="/Picture1.png">
+    <div className="home-top-right" >
+      <img alt="" className="home-m-b-20" width="200" height="100" src="/Picture1.png">
       </img>
 
-      <a href='/register'><button className="btn" type="submit" style={mystyle} >Signup</button></a>
-      <a href='/login'><button className="btn" type="submit" style={mystyle1} >Login</button></a>
+      <a href='/register'><button className="home-btn btn" type="submit" style={mystyle} >Signup</button></a>
+      <a href='/login'><button className="home-btn btn" type="submit" style={mystyle1} >Login</button></a>
 
 
     </div>

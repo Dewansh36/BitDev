@@ -21,7 +21,7 @@ function Friends() {
                     </div>
                 </div>
             </div>
-            {/* repeat  */} 
+            {/* repeat  */}
             <div class="container mt-3 d-flex justify-content-center">
                 <div class="card p-3">
                     <div class="d-flex align-items-center">
@@ -37,7 +37,7 @@ function Friends() {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="container mt-3 d-flex justify-content-center">
                 <div class="card p-3">
                     <div class="d-flex align-items-center">

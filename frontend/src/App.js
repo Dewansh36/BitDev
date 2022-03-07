@@ -9,7 +9,6 @@ import Footer from './Components/footer/footer'
 import Select from './Components/Select/Select'
 import Profile from './Components/User/Profile'
 import Project from './Components/project/Project'
-import Editor from './Components/Editor/Editor'
 import CreatePost from './Components/post/Post'
 function App() {
   return (
@@ -21,11 +20,11 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/selectPage' element={<Select />} />
-          {/* <Route path='/users/:id/edit' element={<EditProfile />} /> */}
           <Route path='/users/:id' element={<Profile />} />
           <Route path='/posts' element={<Project />} />
-          <Route path='/editor' element={<Editor />} />
+          {/* <Route path='/editor' element={<Editor />} /> */}
           <Route path='/createPost' element={<CreatePost />} />
+          <Route path='/project' element={<Project />} />
         </Routes>
       </div>
       <Footer />
