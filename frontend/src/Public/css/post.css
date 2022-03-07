@@ -6,14 +6,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+.PostBody {
   background: whitesmoke;
   font-size: 12px;
 }
 
-body,
-button,
-input {
+.PostBody,
+.PostButton,
+.PostInput {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   letter-spacing: 1.4px;
@@ -22,27 +22,27 @@ input {
   width: 250px;
   padding-top: 2rem;
 } */
-.background {
+.PostBackground {
   display: flex;
   min-height: 100vh;
 }
 
-.container {
+.Postcontainer {
   flex: 0 1 700px;
   margin: auto;
   padding: 10px;
 }
-.gif {
+.Postgif {
   width: 5px;
   height: 5px;
 }
-.screen {
+.Postscreen {
   position: relative;
   background: #3e3e3e;
   border-radius: 15px;
 }
 
-.screen:after {
+.Postscreen:after {
   content: "";
   display: block;
   position: absolute;
@@ -55,7 +55,7 @@ input {
   z-index: -1;
 }
 
-.screen-header {
+.Postscreen-header {
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -64,11 +64,11 @@ input {
   border-top-right-radius: 15px;
 }
 
-.screen-header-left {
+.Postscreen-header-left {
   margin-right: auto;
 }
 
-.screen-header-button {
+.Postscreen-header-button {
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -77,23 +77,23 @@ input {
   background: white;
 }
 
-.screen-header-button.close {
+.Postscreen-header-button.close {
   background: #ed1c6f;
 }
 
-.screen-header-button.maximize {
+.Postscreen-header-button.maximize {
   background: #e8e925;
 }
 
-.screen-header-button.minimize {
+.Postscreen-header-button.minimize {
   background: #74c54f;
 }
 
-.screen-header-right {
+.Postscreen-header-right {
   display: flex;
 }
 
-.screen-header-ellipsis {
+.Postscreen-header-ellipsis {
   width: 3px;
   height: 3px;
   margin-left: 2px;
@@ -101,21 +101,21 @@ input {
   background: #999;
 }
 
-.screen-body {
+.Postscreen-body {
   display: flex;
 }
 
-.screen-body-item {
+.Postscreen-body-item {
   flex: 1;
   padding: 50px;
 }
 
-.screen-body-item.left {
+.Postscreen-body-item.left {
   display: flex;
   flex-direction: column;
 }
 
-.app-title {
+.Postapp-title {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -123,7 +123,7 @@ input {
   font-size: 26px;
 }
 
-.app-title:after {
+.Postapp-title:after {
   content: "";
   display: block;
   position: absolute;
@@ -134,26 +134,26 @@ input {
   background: #9f1dea;
 }
 
-.app-contact {
+.Postapp-contact {
   margin-top: auto;
   font-size: 8px;
   color: #888;
 }
 
-.app-form-group {
+.Postapp-form-group {
   margin-bottom: 15px;
 }
 
-.app-form-group.message {
+.Postapp-form-group.message {
   margin-top: 40px;
 }
 
-.app-form-group.buttons {
+.Postapp-form-group.buttons {
   margin-bottom: 0;
   text-align: right;
 }
 
-.app-form-control {
+.Postapp-form-control {
   width: 100%;
   padding: 10px 0;
   background: none;
@@ -166,15 +166,15 @@ input {
   transition: border-color 0.2s;
 }
 
-.app-form-control::placeholder {
+.Postapp-form-control::placeholder {
   color: #666;
 }
 
-.app-form-control:focus {
+.Postapp-form-control:focus {
   border-bottom-color: #ddd;
 }
 
-.app-form-button {
+.Postapp-form-button {
   background: none;
   border: none;
   color: #9f1dea;
@@ -183,11 +183,11 @@ input {
   outline: none;
 }
 
-.app-form-button:hover {
+.Postapp-form-button:hover {
   color: #c28ee0;
 }
 
-.credits {
+.Postcredits {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -198,7 +198,7 @@ input {
   font-weight: normal;
 }
 
-.credits-link {
+.Postcredits-link {
   display: flex;
   align-items: center;
   color: #fff;
@@ -206,40 +206,40 @@ input {
   text-decoration: none;
 }
 
-.dribbble {
+.Postdribbble {
   width: 20px;
   height: 20px;
   margin: 0 5px;
 }
 
 @media screen and (max-width: 520px) {
-  .screen-body {
+  .Postscreen-body {
     flex-direction: column;
   }
 
-  .screen-body-item.left {
+  .Postscreen-body-item.left {
     margin-bottom: 30px;
   }
 
-  .app-title {
+  .Postapp-title {
     flex-direction: row;
   }
 
-  .app-title span {
+  .Postapp-title span {
     margin-right: 12px;
   }
 
-  .app-title:after {
+  .Postapp-title:after {
     display: none;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .screen-body {
+  .Postscreen-body {
     padding: 40px;
   }
 
-  .screen-body-item {
+  .Postscreen-body-item {
     padding: 0;
   }
 }
