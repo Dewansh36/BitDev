@@ -132,7 +132,10 @@ app.get('/project', checkLogin, async (req, res, next) => {
         .populate({
             path: 'friends',
             populate: {
-                path: 'posts'
+                path: 'posts',
+                populate: {
+                    path: 'author'
+                }
             }
         });
     for (let frnd of user.friends) {
@@ -142,8 +145,8 @@ app.get('/project', checkLogin, async (req, res, next) => {
         return new Date(b.date)-new Date(a.date);
     }
     posts.sort(compare);
-    console.log(posts);
-    res.send('Ok!');
+    console.log("Posts:  ", posts);
+    res.send({ success: 'Fetched Posts Successfully', data: posts });
 })
 
 app.get('/search', async (req, res, next) => {

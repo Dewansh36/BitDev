@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
-import Styles from '../../Public/css/SecondPage.module.css'
+import Styles from '../../Public/css/SelectPage.module.css'
 import SelectPageImage from '../../Public/image/SelectPageImage.png'
 import Loading from '../loading';
 import Navbar from '../navbar/navbar';
