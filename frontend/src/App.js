@@ -12,6 +12,10 @@ import Project from './Components/project/Project'
 import CreatePost from './Components/post/Post'
 import News from './Components/news/News'
 import Search from './Components/Search/Search';
+// import Project from './Components/project/Project'
+import CreatePost from './Components/post/Post';
+import Conversation from './Components/Conversations/Conversations';
+import Messenger from './Components/Messenger/Messenger';
 function App() {
   return (
     <Router>
@@ -28,6 +32,11 @@ function App() {
           <Route path='/posts' element={<Project />} />
           <Route path='/news' element={<News />} />
           <Route path='/search' element={<Search />} />
+          {/* <Route path='/posts' element={<Project />} /> */}
+          {/* <Route path='/editor' element={<Editor />} /> */}
+          <Route path='/createPost' element={<CreatePost />} />
+          {/* <Route path='/project' element={<Project />} /> */}
+          <Route path='/messenger' element={<Messenger />} />
         </Routes>
       </div>
       <Footer />
