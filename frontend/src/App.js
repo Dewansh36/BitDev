@@ -10,6 +10,8 @@ import Select from './Components/Select/Select'
 import Profile from './Components/User/Profile'
 import Project from './Components/project/Project'
 import CreatePost from './Components/post/Post'
+import News from './Components/news/News'
+import Search from './Components/Search/Search';
 function App() {
   return (
     <Router>
@@ -21,10 +23,11 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/selectPage' element={<Select />} />
           <Route path='/users/:id' element={<Profile />} />
-          <Route path='/posts' element={<Project />} />
           {/* <Route path='/editor' element={<Editor />} /> */}
           <Route path='/createPost' element={<CreatePost />} />
-          <Route path='/project' element={<Project />} />
+          <Route path='/posts' element={<Project />} />
+          <Route path='/news' element={<News />} />
+          <Route path='/search' element={<Search />} />
         </Routes>
       </div>
       <Footer />

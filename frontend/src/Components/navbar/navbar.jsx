@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js'
 import logo from '../../Public/image/Picture1.png'
 import '../../Public/css/navbar.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Search from '../Search/Search';
 
 
 const Navbar=(props) => {
@@ -28,9 +29,11 @@ const Navbar=(props) => {
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-white text-black Navbarboxshadow">
                 <div className="container-fluid">
-                    <div>
-                        <img src={logo} className="Navbartoplogo" />
-                    </div>
+                    <a href='/selectPage'>
+                        <div>
+                            <img src={logo} className="Navbartoplogo" />
+                        </div>
+                    </a>
                     <a className="navbar-brand fw-bold text-black" id="Navbartlogo" href="#">BitDev</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -38,15 +41,17 @@ const Navbar=(props) => {
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <a className="nav-link" aria-current="page" href="/project">Project</a>
+                                <a className="nav-link" aria-current="page" href="/posts">Project</a>
                             </li>
                             <li className="nav-item">
                                 <a className="nav-link" href="/cp">Competitive Programming</a>
                             </li>
                         </ul>
-                        <form className="d-flex" action="/search">
-                            <input name="search" className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-success me-3" type="submit">Search</button>
+                        <form action="/search" className="ms-5 nav-search-bar">
+                            <input type="search" name="search" pattern=".*\S.*" required />
+                            <button className="nav-search-btn" type="submit">
+                                <span>Search</span>
+                            </button>
                         </form>
                         <ul className="aboutus navbar-nav ms-md-3">
                             <li className="nav-item">

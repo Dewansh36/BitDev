@@ -4,24 +4,26 @@ const express=require('express');
 const multer=require('multer');
 
 module.exports.home=async (req, res, next) => {
-    const user=await User.findById(req.user.id)
+    let posts=[];
+    let user=await User.findById(req.user.id)
         .populate({
             path: 'friends',
             populate: {
-                path: 'posts'
+                path: 'posts',
+                populate: {
+                    path: 'author'
+                }
             }
-        }
-        );
-    const reqPosts=[];
-    for (let friend of user.friends) {
-        for (let post of friend.posts) {
-            reqPosts.push(post);
-        }
+        });
+    for (let frnd of user.friends) {
+        posts=posts.concat(frnd.posts);
     }
-    reqPosts.sort((a, b) => {
-        return a.datePosted<b.datePosted;
-    });
-    res.send({ success: "Enjoy Your Updated Feed!", posts: reqPosts });
+    const compare=(a, b) => {
+        return new Date(b.date)-new Date(a.date);
+    }
+    posts.sort(compare);
+    console.log("Posts:  ", posts);
+    res.send({ success: 'Fetched Posts Successfully', data: posts });
 }
 
 module.exports.view=async (req, res, next) => {
@@ -36,8 +38,7 @@ module.exports.view=async (req, res, next) => {
                 path: 'author'
             }
         });
-    res.render('posts/views', { post });
-    return;
+    res.send({ success: 'Fetched Post', post: post });
 }
 module.exports.getAllPosts=async (req, res, next) => {
     const posts=await Post.find().limit(6)

@@ -16,7 +16,7 @@ const Project=() => {
   const notify=(message, type) => toast(`${message}`, { type: type });
   useEffect(() => {
     if (curUser!=undefined) {
-      axios.get('http://localhost:4000/project', {
+      axios.get('http://localhost:4000/posts', {
         withCredentials: true
       })
         .then((response) => {

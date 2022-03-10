@@ -42,14 +42,6 @@ main()
     });
 
 
-// //setting up ejs for use and path for files
-// app.engine('ejs', ejsmate);
-// app.set('view engine', 'ejs');
-// app.set('views', path.join(__dirname, 'views'));
-
-// //For adding static file's like css and images etc
-// app.use(express.static(path.join(__dirname, '/public')));
-
 const port=4000;
 app.listen(port, () => {
     console.log(`Listning on ${port}!`);
@@ -103,6 +95,7 @@ const loginRoutes=require('./routes/loginRoutes');
 const userRoutes=require('./routes/userRoutes');
 const postRoutes=require('./routes/postRoutes');
 const commentRoutes=require('./routes/commentRoutes');
+const catchAsync=require('./middleware/catchAsync');
 
 app.get('/', (req, res) => {
     res.send('<h1>APi Running!</h1>');
@@ -125,35 +118,12 @@ app.get('/cp', checkLogin, async (req, res, next) => {
     res.render('CP', { curuser });
 });
 
-app.get('/project', checkLogin, async (req, res, next) => {
-
-    let posts=[];
-    let user=await User.findById(req.user.id)
-        .populate({
-            path: 'friends',
-            populate: {
-                path: 'posts',
-                populate: {
-                    path: 'author'
-                }
-            }
-        });
-    for (let frnd of user.friends) {
-        posts=posts.concat(frnd.posts);
-    }
-    const compare=(a, b) => {
-        return new Date(b.date)-new Date(a.date);
-    }
-    posts.sort(compare);
-    console.log("Posts:  ", posts);
-    res.send({ success: 'Fetched Posts Successfully', data: posts });
-})
-
-app.get('/search', async (req, res, next) => {
-    const search=req.query.search;
-    const findResult=partialSearch(search);
-    res.send(findResult);
-});
+app.post('/search', catchAsync(async (req, res, next) => {
+    const { query }=req.body;
+    const { finalResult }=await partialSearch(query, 'posts');
+    console.log("result:  ", finalResult);
+    res.send({ success: `Results for ${query}`, finalResult });
+}));
 
 app.use((err, req, res, next) => {
     let { status=500, message="Error Occurred!" }=err;
