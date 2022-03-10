@@ -103,7 +103,8 @@ const loginRoutes=require('./routes/loginRoutes');
 const userRoutes=require('./routes/userRoutes');
 const postRoutes=require('./routes/postRoutes');
 const commentRoutes=require('./routes/commentRoutes');
-
+const conversations=require('./routes/conversations') ; 
+const messages=require('./routes/messages') ;
 app.get('/', (req, res) => {
     res.send('<h1>APi Running!</h1>');
 })
@@ -118,7 +119,13 @@ app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 
 // Comments Routes
-app.use('/posts/:pid/comments', commentRoutes);
+app.use('/posts/:pid/comments', commentRoutes); 
+
+//conversations Routes
+app.use("/api/conversations", conversations); 
+
+//Messages routes
+app.use("/api/messages", messages);
 
 app.get('/cp', checkLogin, async (req, res, next) => {
     const curuser=await User.findById(req.user.id);
