@@ -110,12 +110,38 @@ const Register=() => {
     const nextBtn=() => {
         console.log('Console!');
         const pages=document.querySelectorAll('.page');
-        const bar=document.querySelectorAll('.prog');
-        if (pos<pages.length-1) {
-            pages[pos].classList.add('hide');
-            pages[pos+1].classList.remove('hide');
-            bar[pos+1].classList.add('active');
-            setPos(pos+1);
+        const bar=document.querySelectorAll('.prog'); 
+        if (pos<pages.length-1) { 
+            if(pos === 0) 
+            { 
+                if(state.username === '' || state.email === '' ||cpass === '' || state.password === '')
+                {
+                    notify("fill all the required details","error") ;
+                }
+                else
+                {
+                    pages[pos].classList.add('hide');
+                    pages[pos+1].classList.remove('hide');
+                    bar[pos+1].classList.add('active');
+                    setPos(pos+1); 
+                } 
+            }  
+            else if (pos === 1) 
+            { 
+                if(state.codechef === '' || state.codeforces === '' )
+                {
+                    notify("fill all the required details","error") ;
+                }
+                else
+                {
+                    pages[pos].classList.add('hide');
+                    pages[pos+1].classList.remove('hide');
+                    bar[pos+1].classList.add('active');
+                    setPos(pos+1); 
+                } 
+
+            }
+            
         }
 
     }
