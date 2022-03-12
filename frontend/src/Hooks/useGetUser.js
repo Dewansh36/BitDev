@@ -4,28 +4,47 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-function useGetUser(intialState) {
+function useGetUser(intialState, id=undefined) {
     const [curUser, setUser]=useState(intialState);
     const navigate=useNavigate();
 
     const notify=(message, type) => toast(`${message}`, { type: type });
 
     useEffect(() => {
-        axios.get('http://localhost:4000/getUser', { withCredentials: true })
-            .then((response) => {
-                const { error, user }=response.data;
-                if (!user) {
-                    notify(error, "error");
-                    navigate('/login');
-                }
-                else if (error!=undefined) {
-                    notify(error, "error");
-                }
-                else {
-                    console.log('User Fetched!');
-                    setUser(user);
-                }
-            })
+        if (id==undefined) {
+            axios.get('http://localhost:4000/getUser', { withCredentials: true })
+                .then((response) => {
+                    const { error, user }=response.data;
+                    if (!user) {
+                        notify(error, "error");
+                        navigate('/login');
+                    }
+                    else if (error!=undefined) {
+                        notify(error, "error");
+                    }
+                    else {
+                        console.log('User Fetched!');
+                        setUser(user);
+                    }
+                })
+        }
+        else {
+            axios.get(`http://localhost:4000/user/${id}`, { withCredentials: true })
+                .then((response) => {
+                    const { error, user }=response.data;
+                    if (!user) {
+                        notify(error, "error");
+                        navigate('/login');
+                    }
+                    else if (error!=undefined) {
+                        notify(error, "error");
+                    }
+                    else {
+                        console.log('User Fetched!');
+                        setUser(user);
+                    }
+                })
+        }
 
     }, [])
     return [curUser];

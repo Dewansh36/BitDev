@@ -5,7 +5,6 @@ import logo from '../../Public/image/Picture1.png'
 import '../../Public/css/navbar.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Search from '../Search/Search';
 
 
 const Navbar=(props) => {
@@ -47,7 +46,11 @@ const Navbar=(props) => {
                                 <a className="nav-link" href="/cp">Competitive Programming</a>
                             </li>
                         </ul>
-                        <form action="/search" className="ms-5 nav-search-bar">
+                        <form action="/search" className="ms-auto nav-search-bar">
+                            <select className="form-control type-select" name='type' required>
+                                <option value="posts">Posts</option>
+                                <option value="users">Users</option>
+                            </select>
                             <input type="search" name="search" pattern=".*\S.*" required />
                             <button className="nav-search-btn" type="submit">
                                 <span>Search</span>

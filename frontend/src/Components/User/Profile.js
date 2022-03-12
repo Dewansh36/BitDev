@@ -1,21 +1,25 @@
 import React, { Fragment, useEffect, useState } from "react";
+import Navbar from '../navbar/navbar'
 import { useParams } from "react-router-dom";
 import "./Profile.css";
 import useGetUser from '../../Hooks/useGetUser';
 import Loading from '../loading'
 const Profile=() => {
+  const { id }=useParams();
   const [curUser]=useGetUser({});
+  const [reqUser]=useGetUser({}, id);
   const [loading, setLoading]=useState(true);
   const [toogleState, setToogleState]=useState(1);
-  const { id }=useParams();
   const toogleTab=(index) => {
     setToogleState(index);
   };
   useEffect(() => {
-    if (curUser.displayname!=undefined) {
+    if (curUser.displayname!=undefined&&reqUser.displayname!=undefined) {
       setLoading(false);
+      console.log("Current: ", curUser);
+      console.log("Required:  ", reqUser);
     }
-  }, [curUser])
+  }, [curUser, reqUser])
   if (loading==true) {
     return (
       <Loading />
@@ -23,6 +27,7 @@ const Profile=() => {
   }
   return (
     <Fragment>
+      <Navbar user={curUser} />
       {/* <img
         src="https://res.cloudinary.com/dewansh/image/upload/v1641545976/BitMart/Products/pOSTER_1_loitig.jpg"
         id="banner"
@@ -31,7 +36,7 @@ const Profile=() => {
         <div className="row" id="user-profile">
           <div className="col-lg-3 col-md-4 col-sm-4">
             <div className="main-box">
-              <h2 className="profile-h2">{curUser.displayname}</h2>
+              <h2 className="profile-h2">{reqUser.displayname}</h2>
               <div className="profile-status">
                 <i className="fa fa-check-circle"></i> Online
               </div>
@@ -57,7 +62,7 @@ const Profile=() => {
               <div className="profile-details">
                 <ul className="fa-ul">
                   <li>
-                    <i className="fa-li fa fa-tasks"></i>Posts: <span>{curUser.posts.length}</span>
+                    <i className="fa-li fa fa-tasks"></i>Posts: <span>{reqUser.posts.length}</span>
                   </li>
                   <li>
                     <i className="fa-li fa fa-thumbs-up"></i>Likes:{" "}
@@ -65,7 +70,7 @@ const Profile=() => {
                   </li>
                   <li>
                     <i className="fa-li fa fa-comment"></i>Comments:{" "}
-                    <span>{curUser.comments.length}</span>
+                    <span>{reqUser.comments.length}</span>
                   </li>
                 </ul>
               </div>
@@ -84,9 +89,16 @@ const Profile=() => {
                 <h3 className="profile-h3">
                   <span style={{ color: "black" }}>User info</span>
                 </h3>
-                <button className="btn btn-primary edit-profile">
-                  <i className="fa fa-pencil-square fa-lg"></i> Edit profile
-                </button>
+                {
+                  (curUser._id==id)?
+                    <a href={`/user/${reqUser._id}/edit`}>
+                      <button className="btn btn-primary edit-profile">
+                        <i className="fa fa-pencil-square fa-lg"></i> Edit profile
+                      </button>
+                    </a>
+                    :
+                    <></>
+                }
               </div>
 
               <div className="profile-user-info" id="userInfo">
@@ -94,19 +106,19 @@ const Profile=() => {
                   <div className="profile-user-details">
                     <div className="profile-user-details-label">Username&nbsp;<i class="fas fa-user"></i></div>
                     <div className="profile-user-details-value">
-                      {curUser.username}
+                      {reqUser.username}
                     </div>
                   </div>
                   <div className="profile-user-details">
                     <div className="profile-user-details-label">Email&nbsp;<i class="fas fa-envelope"></i></div>
                     <div className="profile-user-details-value">
-                      {curUser.email}
+                      {reqUser.email}
                     </div>
                   </div>
                   <div className="profile-user-details">
                     <div className="profile-user-details-label">College&nbsp;<i class="fas fa-university"></i></div>
                     <div className="profile-user-details-value">
-                      {curUser.collegename}
+                      {reqUser.collegename}
                     </div>
                   </div>
                   <div className="profile-user-details">
@@ -114,7 +126,7 @@ const Profile=() => {
                       Codeforces&nbsp;<span class="iconify" data-icon="simple-icons:codeforces"></span>
                     </div>
                     <div className="profile-user-details-value">
-                      {curUser.cfhandle}
+                      {reqUser.cfhandle}
                     </div>
                   </div>
                   <div className="profile-user-details">
@@ -125,7 +137,7 @@ const Profile=() => {
                           d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2zm3.027 4.002c-.83 0-1.319.642-1.319 1.753v.743c0 1.107.48 1.727 1.319 1.727.69 0 1.138-.435 1.186-1.05H7.36v.114c-.057 1.147-1.028 1.938-2.342 1.938-1.613 0-2.518-1.028-2.518-2.729v-.747C2.5 6.051 3.414 5 5.018 5c1.318 0 2.29.813 2.342 2v.11H6.213c-.048-.638-.505-1.108-1.186-1.108zm6.14 0c-.831 0-1.319.642-1.319 1.753v.743c0 1.107.48 1.727 1.318 1.727.69 0 1.139-.435 1.187-1.05H13.5v.114c-.057 1.147-1.028 1.938-2.342 1.938-1.613 0-2.518-1.028-2.518-2.729v-.747c0-1.7.914-2.751 2.518-2.751 1.318 0 2.29.813 2.342 2v.11h-1.147c-.048-.638-.505-1.108-1.187-1.108z" />
                       </svg>
                     </div>
-                    <div className="profile-user-details-value">{curUser.cchandle}</div>
+                    <div className="profile-user-details-value">{reqUser.cchandle}</div>
                   </div>
                 </div>
                 {/* <div className="profile-social" id="userInfo2">
@@ -177,14 +189,14 @@ const Profile=() => {
                   }
                 >
                   {
-                    curUser.posts.map((post) => {
+                    reqUser.posts.map((post) => {
                       return (
                         <div className="card1 my-3">
                           <div className="image-data">
                             <div className="background-image"></div>
                             <div className="user-details">
                               <a href="#" className="author">
-                                <i className="fas fa-user"></i>{curUser.displayname}
+                                <i className="fas fa-user"></i>{reqUser.displayname}
                               </a>
                               <span className="profile-date">
                                 <i className="fas fa-calendar-day"></i>Jan 18,2021
@@ -192,7 +204,7 @@ const Profile=() => {
                             </div>
                           </div>
                           <div className="post-data">
-                            <h3 className="profile-h3" className="profile-title">{post.title}</h3 >
+                            <h3 className="profile-h3 profile-title">{post.title}</h3 >
                             <p className="description">
                               {post.description}
                             </p>
@@ -212,7 +224,7 @@ const Profile=() => {
                 >
                   <ul className="widget-users row m-3">
                     {
-                      curUser.friends.map((friend) => {
+                      reqUser.friends.map((friend) => {
                         return (
                           <li className="col-md-6">
                             <div className="img">
@@ -224,7 +236,7 @@ const Profile=() => {
                             </div>
                             <div className="details">
                               <div className="name">
-                                <a className="profile-a" href={"/users/"+friend._id}>{friend.displayname} </a>
+                                <a className="profile-a" href={`/users/${friend._id}`}>{friend.displayname} </a>
                               </div>
                               <div className="time">
                                 <i className="fa fa-clock-o"></i> Last online: 5

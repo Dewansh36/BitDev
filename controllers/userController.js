@@ -49,9 +49,11 @@ module.exports.profile=async (req, res, next) => {
         await post.save();
     }
     await curuser.save();
+
+    console.log("Required:  ", curuser);
     // res.render;
     // console.log(curuser);
-    res.render('users/profilepage', { curuser });
+    res.send({ success: 'User Fetched', user: curuser });
 }
 
 module.exports.edit=async (req, res, next) => {

@@ -107,7 +107,7 @@ app.get('/', (req, res) => {
 app.use('/', loginRoutes);
 
 //User Routes
-app.use('/users', userRoutes);
+app.use('/user', userRoutes);
 
 //Posts Routes
 app.use('/posts', postRoutes);
@@ -127,8 +127,8 @@ app.get('/cp', checkLogin, async (req, res, next) => {
 });
 
 app.post('/search', catchAsync(async (req, res, next) => {
-    const { query }=req.body;
-    const { finalResult }=await partialSearch(query, 'posts');
+    const { query, type }=req.body;
+    const { finalResult }=await partialSearch(query, type);
     console.log("result:  ", finalResult);
     res.send({ success: `Results for ${query}`, finalResult });
 }));
