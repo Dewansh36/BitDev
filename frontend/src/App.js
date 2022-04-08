@@ -13,7 +13,7 @@ import Profile from './Components/User/Profile'
 import News from './Components/news/News'
 import Search from './Components/Search/Search';
 // import Project from './Components/project/Project'
-import Conversation from './Components/Conversations/Conversations';
+// import Conversation from './Components/Conversations/Conversations';
 import Messenger from './Components/Messenger/Messenger';
 function App() {
   return (
@@ -27,11 +27,11 @@ function App() {
           <Route path='/selectPage' element={<Select />} />
           <Route path='/users/:id' element={<Profile />} />
           {/* <Route path='/editor' element={<Editor />} /> */}
-          <Route path='/createPost' element={<CreatePost />} />
+          {/* <Route path='/createPost' element={<CreatePost />} /> */}
           {/* <Route path='/posts' element={<Project />} /> */}
           <Route path='/news' element={<News />} />
           <Route path='/search' element={<Search />} />
-          <Route path='/createPost' element={<CreatePost />} />
+          {/* <Route path='/createPost' element={<CreatePost />} /> */}
           <Route path='/messenger' element={<Messenger />} />
         </Routes>
       </div>
