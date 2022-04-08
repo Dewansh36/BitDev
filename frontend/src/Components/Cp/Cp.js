@@ -28,14 +28,14 @@ const callApi=async (url) => {
 function Cp() {
     let rpRating=-1;
     const [cfdata, setcfData]=useState({});
-    const [ccdata, setccData]=useState({});
+    // const [ccdata, setccData]=useState({});
     const [Upcomingdata, setUpcomingData]=useState({});
     const [Problemdata, setProblemData]=useState({});
     const [loading, setLoading]=useState(true);
     const [error, setError]=useState('');
-    const ccname="dewansh_36";
+    // const ccname="dewansh_36";
     const cfname="Dewansh05";
-    const ccurl="https://competitive-programming-score.herokuapp.com/api/codechef/"+ccname;
+    // const ccurl="https://competitive-programming-score.herokuapp.com/api/codechef/"+ccname;
     const cfurl="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfname;
     let cn1, cn2, cn3, cl1, cl2, cl3, ct1, ct2, ct3;
     let pn1, pn2, pn3, pl1, pl2, pl3;
@@ -61,15 +61,15 @@ function Cp() {
     useEffect(async () => {
         Promise.all([
             callApi(cfurl),
-            callApi(ccurl),
+            // callApi(ccurl),
             callApi('https://codeforces.com/api/contest.list?gym=false'),
             callApi('https://codeforces.com/api/problemset.problems'),
         ]).then((values) => {
             console.log(values);
             setcfData(values[0]);
-            setccData(values[1]);
-            setProblemData(values[3]);
-            setUpcomingData(values[2]);
+            // setccData(values[1]);
+            setProblemData(values[2]);
+            setUpcomingData(values[1]);
             rpRating=cfdata.rating;
             setLoading(false);
             console.log(rpRating);
@@ -80,10 +80,10 @@ function Cp() {
                 setLoading(false);
             })
     }, [])
-    if (Upcomingdata.result!=undefined) {
+    if(Upcomingdata.result!=undefined) {
         console.log(Upcomingdata);
         let x=0;
-        while (Upcomingdata.result[x].phase=="BEFORE")
+        while(Upcomingdata.result[x].phase=="BEFORE")
             x++;
         console.log(x);
         x--;
@@ -200,14 +200,14 @@ function Cp() {
                                         <h3 className={Styles.resFix}>Max rating - {cfdata["max rating"]} <span id="cfmrating"></span></h3>
                                     </p>
                                 </div>
-                                <img className={Styles.logo_pic} src={ccImage} alt="codechef" />
+                                {/* <img className={Styles.logo_pic} src={ccImage} alt="codechef" />
                                 <p>
                                     <h2>Codechef</h2>
                                     <h3 className={Styles.resFix}> {ccname} <span id="cchandle"></span></h3>
                                     <h3 className={Styles.resFix}>Current rating - {ccdata.rating} <span id="ccrating"></span></h3>
                                     <h3 className={Styles.resFix}>Current rank - {ccdata.stars} <span id="cccrank"></span></h3>
                                     <h3 className={Styles.resFix}>Max rating - {ccdata.highest_rating} <span id="ccmrating"></span></h3>
-                                </p>
+                                </p> */}
                             </Col>
                             <Col lg={6} md={12} className={Styles.leftBorder}>
                                 <div className={Styles.bottomBorder}>
