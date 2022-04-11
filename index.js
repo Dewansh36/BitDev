@@ -54,9 +54,10 @@ const connectDatabase = ()=>{
 // store.on('error', function (e) {
 //     console.log(e);
 // });
+const port=process.env.PORT || 4000;
 connectDatabase()
-app.listen(process.env.PORT, () => {
-    console.log(`Listning on Port ${process.env.PORT}`);
+app.listen(port, () => {
+    console.log(`Listning on Port ${port}`);
 });
 
 //setting up sessions
