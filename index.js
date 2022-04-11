@@ -23,24 +23,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     cors({
-        origin: "http://localhost:3000", // <-- location of the react app were connecting to
+        origin: "https://bit-dev22.web.app/", // <-- location of the react app were connecting to
         credentials: true,
     })
 );
 
 //Setting Up mongoose
-const connectDatabase = ()=>{
-    mongoose.connect(process.env.db_url,{
+const connectDatabase=() => {
+    mongoose.connect(process.env.db_url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then((data) => {
-        console.log(`Mongodb connected with server :${data.connection.host}`);
-        // console.log(data);
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+        .then((data) => {
+            console.log(`Mongodb connected with server :${data.connection.host}`);
+            // console.log(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 }
 //Setting Up Mongo Store
 // const store=new Mongostore(
@@ -54,7 +54,7 @@ const connectDatabase = ()=>{
 // store.on('error', function (e) {
 //     console.log(e);
 // });
-const port=process.env.PORT || 4000;
+const port=process.env.PORT||4000;
 connectDatabase()
 app.listen(port, () => {
     console.log(`Listning on Port ${port}`);
