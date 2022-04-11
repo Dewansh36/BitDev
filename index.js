@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     cors({
-        origin: "https://bit-dev22.web.app/", // <-- location of the react app were connecting to
+        origin: "https://bit-dev.vercel.app", // <-- location of the react app were connecting to
         credentials: true,
     })
 );
