@@ -20,7 +20,7 @@ function Select() {
     const notify=(message, type) => toast(`${message}`, { type: type });
 
     useEffect(() => {
-        axios.get('http://localhost:4000/getUser', { withCredentials: true })
+        axios.get('https://bit-dev22.herokuapp.com/getUser', { withCredentials: true })
             .then((response) => {
                 const { error, success, user }=response.data;
                 console.log(response.data);

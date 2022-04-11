@@ -5,16 +5,16 @@ import Loading from "../loading";
 import SelectPageImage from "../../Public/image/SelectPageImage.png"
 
 export default function Conversation({ conversation, currentUser }) {
-  const [user, setUser] = useState(null);
-  const [loading, setloading] = useState(true);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [user, setUser]=useState(null);
+  const [loading, setloading]=useState(true);
+  const PF=process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
-    let friendId = conversation.members.find((m) => m !== currentUser._id);
+    let friendId=conversation.members.find((m) => m!==currentUser._id);
 
-    const getUser = async () => {
+    const getUser=async () => {
       try {
-        const res = await axios(`http://localhost:4000/user?userId=${friendId}`);
+        const res=await axios(`https://bit-dev22.herokuapp.com/user?userId=${friendId}`);
         console.log(res);
         setUser(res.data);
         setloading(false);
@@ -26,21 +26,21 @@ export default function Conversation({ conversation, currentUser }) {
   }, [currentUser, conversation]);
   if (loading==true) {
     return (
-        <Loading />
+      <Loading />
     )
-}
+  }
   return (
     <Fragment>
-    <Fragment>
-    <div className="conversation">
-      <img
-        className="conversationImg"
-        src={user?.avatar?user.avatar:SelectPageImage}
-        alt=""
-      />
-      <span className="conversationName">{user?.displayname}</span>
-    </div>
-    </Fragment>
+      <Fragment>
+        <div className="conversation">
+          <img
+            className="conversationImg"
+            src={user?.avatar? user.avatar:SelectPageImage}
+            alt=""
+          />
+          <span className="conversationName">{user?.displayname}</span>
+        </div>
+      </Fragment>
     </Fragment>
   );
 }

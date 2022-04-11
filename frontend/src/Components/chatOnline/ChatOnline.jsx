@@ -4,14 +4,14 @@ import "./chatonline.css";
 import SelectPageImage from "../../Public/image/SelectPageImage.png"
 
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
-  const [friends, setFriends] = useState([]);
-  const [onlineFriends, setOnlineFriends] = useState([]);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [friends, setFriends]=useState([]);
+  const [onlineFriends, setOnlineFriends]=useState([]);
+  const PF=process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
-    const getFriends = async () => {
+    const getFriends=async () => {
       console.log("called")
-      const res = await axios.get(`http://localhost:4000/user/${currentId}/friends`);
+      const res=await axios.get(`https://bit-dev22.herokuapp.com/user/${currentId}/friends`);
       // console.log(res.data.curuser);
       setFriends(res.data.curuser.friends);
     };
@@ -25,10 +25,10 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   console.log(friends)
 
-  const handleClick = async (user) => {
+  const handleClick=async (user) => {
     try {
-      const res = await axios.get(
-        `http://localhost:4000/api/conversations/find/${currentId}/${user._id}`
+      const res=await axios.get(
+        `https://bit-dev22.herokuapp.com/api/conversations/find/${currentId}/${user._id}`
       );
       setCurrentChat(res.data);
     } catch (err) {
@@ -43,7 +43,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
           <div className="chatOnlineImgContainer">
             <img
               className="chatOnlineImg"
-              src={o?.avatar?o.avatar:SelectPageImage}
+              src={o?.avatar? o.avatar:SelectPageImage}
               alt=""
             />
             <div className="chatOnlineBadge"></div>
