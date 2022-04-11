@@ -63,10 +63,12 @@ const Project=() => {
                       posts.map((post) => {
                         return (
                           <div className="m-3 rounded-3 bg-light bordered">
-                            <button className="btn rounded-circle btn-success d-inline my-3 text-center mx-2 fs-6 fw-normal text-black pColor">
-                              AA
-                            </button>
-                            <h6 className="d-inline">{post.author.displayname}</h6>
+                            <a href={`/users/${post.author._id}`}>
+                              <button className="btn rounded-circle btn-success d-inline my-3 text-center mx-2 fs-6 fw-normal text-black pColor">
+                                AA
+                              </button>
+                              <h6 className="d-inline">{post.author.displayname}</h6>
+                            </a>
                             <div className="dropdown d-inline float-end m-3">
                               <div
                                 type="button"
@@ -133,14 +135,11 @@ const Project=() => {
                               <h5 className="postTitle">{post.title}</h5>
                             </div>
                             <div>
-                              <p className="px-3 my-0 fw-light">{post.likes.length}</p>
+                              <p className="px-3 my-0 fw-light">{post.likes.length} Likes</p>
                               <p className="px-3 text-bold my-0">{post.description}</p>
-                              <p className="px-3 fw-light my-0">
-                                view all {post.comments.length} comments
-                              </p>
                               <p className="px-3 fw-light my-0"> {new Date(post.datePosted).toDateString()+" "+new Date(post.datePosted).toLocaleTimeString()} </p>
                             </div>
-                            <div className="row m-0 ">
+                            {/* <div className="row m-0 ">
                               <form>
                                 <input
                                   type="text"
@@ -148,7 +147,7 @@ const Project=() => {
                                   placeholder="Comment..."
                                 />
                               </form>
-                            </div>
+                            </div> */}
                           </div>
                         )
                       })

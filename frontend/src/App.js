@@ -8,10 +8,11 @@ import Register from './Components/Login/Registration';
 import Footer from './Components/footer/footer'
 import Select from './Components/Select/Select'
 import Profile from './Components/User/Profile'
-// import Project from './Components/project/Project'
-// import CreatePost from './Components/post/Post'
+import Project from './Components/project/Project'
+import CreatePost from './Components/post/Post'
 import News from './Components/news/News'
 import Search from './Components/Search/Search';
+import ViewPost from './Components/postview/views';
 // import Project from './Components/project/Project'
 import Conversation from './Components/Conversations/Conversations';
 import Messenger from './Components/Messenger/Messenger';
@@ -26,9 +27,10 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/selectPage' element={<Select />} />
           <Route path='/users/:id' element={<Profile />} />
+          <Route path='/posts/:id' element={<ViewPost />} />
           {/* <Route path='/editor' element={<Editor />} /> */}
           <Route path='/createPost' element={<CreatePost />} />
-          {/* <Route path='/posts' element={<Project />} /> */}
+          <Route path='/posts' element={<Project />} />
           <Route path='/news' element={<News />} />
           <Route path='/search' element={<Search />} />
           <Route path='/createPost' element={<CreatePost />} />

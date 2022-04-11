@@ -14,11 +14,12 @@ const transporter=nodemailer.createTransport(
     }
 );
 module.exports.register=async (req, res, next) => {
+    console.log(req.body);
     const user=new User(
         {
             username: req.body.username,
             email: req.body.email,
-            displayname: req.body.firstname+" "+req.body.lastname,
+            displayname: req.body.firstName+" "+req.body.lastName,
             collegename: req.body.collegename,
             cfhandle: req.body.codeforces,
             cchandle: req.body.codechef,

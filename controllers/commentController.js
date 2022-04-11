@@ -5,7 +5,15 @@ const Comment=require('../models/schemacomment');
 
 module.exports.create=async (req, res, next) => {
     let { pid }=req.params;
-    const post=await Post.findById(pid);
+    const post=await Post.findById(pid)
+        .populate('author')
+        .populate('likes')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        });
     const user=await User.findById(req.user.id);
     const comment=new Comment(req.body);
     comment.author=user.id;
@@ -16,15 +24,16 @@ module.exports.create=async (req, res, next) => {
     user.comments.push(comment);
     await post.save();
     await user.save();
-    console.log(user, post, comment);
-    req.flash('success', 'Comment Posted Successfully!');
-    res.redirect(`/posts/${pid}`);
+    // console.log(user, post, comment);
+    console.log("COmment creator:  ", post.comments);
+    res.send({ success: "Commented Successfully!", post: post });
 }
 
 module.exports.edit=async (req, res, next) => {
     let { pid, cid }=req.params;
     const comment=await Comment.findByIdAndUpdate(cid, req.body, { new: true, runValidators: true });
     console.log(comment);
+    res.send({ success: "Comment Edited Successfully!" });
     // req.flash('success', 'Comment Edited Successfully!');
     // res.redirect(`/posts/${pid}`);
 }
@@ -33,11 +42,20 @@ module.exports.delete=async (req, res, next) => {
     let { pid, cid }=req.params;
     const comment=await Comment.findById(cid);
     const post=await Post.findById(pid)
-        .populate('comments');
+        .populate('author')
+        .populate('likes')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        });
     const user=await User.findById(req.user.id)
         .populate('comments');
     post.comments=post.comments.filter((comment) => { return comment!=null });
     user.comments=user.comments.filter((comment) => { return comment!=null });
+    console.log("Post Before: ", post);
+    console.log("Comment: ", comment);
     for (let i=0; i<post.comments; i++) {
         if (post.comments[i].id==comment.id) {
             post.comments.splice(i, 1);
@@ -53,7 +71,7 @@ module.exports.delete=async (req, res, next) => {
     await post.save();
     await user.save();
     await Comment.findByIdAndDelete(cid);
-    console.log(user, post, comment);
-    req.flash('success', 'Comment Deleted Successfully!');
-    res.redirect(`/posts/${pid}`);
+    // console.log(user, post, comment);
+    console.log("COmment deletor:  ", post.comments);
+    res.send({ success: "Comment Deleted Successfully!", post: post });
 }

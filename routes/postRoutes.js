@@ -18,17 +18,17 @@ router.route('/new')
     .post(checkLogin, upload.array("images"), catchAsync(postController.create));
 
 router.route('/:id')
-    // .get(checkLogin, catchAsync(postController.view))
+    .get(checkLogin, catchAsync(postController.view))
     .put(checkLogin, postAuth, catchAsync(postController.edit))
     .delete(checkLogin, postAuth, catchAsync(postController.delete));
 
 router.route('/:id/like')
-// .get(checkLogin, catchAsync(postController.like));
+    .get(checkLogin, catchAsync(postController.like));
 
 router.route('/:id/dislike')
-// .get(checkLogin, catchAsync(postController.dislike));
+    .get(checkLogin, catchAsync(postController.dislike));
 
 router.route('/:id/edit')
-// .get(checkLogin, postAuth, postController.renderEdit);
+    .put(checkLogin, postAuth, catchAsync(postController.edit));
 
 module.exports=router;

@@ -9,6 +9,11 @@ const Comment=require('./schemacomment');
 
 const userSchema=new schema({
     //
+    avatar:
+    {
+        type: String,
+        // required: true
+    },
     email:
     {
         type: String,

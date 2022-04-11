@@ -110,38 +110,32 @@ const Register=() => {
     const nextBtn=() => {
         console.log('Console!');
         const pages=document.querySelectorAll('.page');
-        const bar=document.querySelectorAll('.prog'); 
-        if (pos<pages.length-1) { 
-            if(pos === 0) 
-            { 
-                if(state.username === '' || state.email === '' ||cpass === '' || state.password === '')
-                {
-                    notify("fill all the required details","error") ;
+        const bar=document.querySelectorAll('.prog');
+        if (pos<pages.length-1) {
+            if (pos===0) {
+                if (state.username===''||state.email===''||cpass===''||state.password==='') {
+                    notify("fill all the required details", "error");
                 }
-                else
-                {
+                else {
                     pages[pos].classList.add('hide');
                     pages[pos+1].classList.remove('hide');
                     bar[pos+1].classList.add('active');
-                    setPos(pos+1); 
-                } 
-            }  
-            else if (pos === 1) 
-            { 
-                if(state.codechef === '' || state.codeforces === '' )
-                {
-                    notify("fill all the required details","error") ;
+                    setPos(pos+1);
                 }
-                else
-                {
+            }
+            else if (pos===1) {
+                if (state.codechef===''||state.codeforces==='') {
+                    notify("fill all the required details", "error");
+                }
+                else {
                     pages[pos].classList.add('hide');
                     pages[pos+1].classList.remove('hide');
                     bar[pos+1].classList.add('active');
-                    setPos(pos+1); 
-                } 
+                    setPos(pos+1);
+                }
 
             }
-            
+
         }
 
     }
@@ -164,6 +158,7 @@ const Register=() => {
             setLoading(false);
             return;
         }
+        // console.log(state);
         axios.post('http://localhost:4000/register', state, { withCredentials: true })
             .then((response) => {
                 let { error, success }=response.data;

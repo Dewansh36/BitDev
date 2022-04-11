@@ -2,6 +2,7 @@ const User=require('../models/schemauser');
 const Post=require('../models/schemapost');
 const express=require('express');
 const multer=require('multer');
+const cloudinary=require('cloudinary').v2;
 
 module.exports.home=async (req, res, next) => {
     let posts=[];
@@ -22,22 +23,24 @@ module.exports.home=async (req, res, next) => {
         return new Date(b.date)-new Date(a.date);
     }
     posts.sort(compare);
-    console.log("Posts:  ", posts);
+    // console.log("Posts:  ", posts);
     res.send({ success: 'Fetched Posts Successfully', data: posts });
 }
 
 module.exports.view=async (req, res, next) => {
-    console.log(req.params);
+    // console.log(req.params);
     let { id }=req.params;
 
     const post=await Post.findById(id)
         .populate('author')
+        .populate('likes')
         .populate({
             path: 'comments',
             populate: {
                 path: 'author'
             }
         });
+    // console.log("Post:  ", post);
     res.send({ success: 'Fetched Post', post: post });
 }
 module.exports.getAllPosts=async (req, res, next) => {
@@ -65,23 +68,48 @@ module.exports.create=async (req, res, next) => {
     user.posts.push(post);
     await post.save();
     await user.save();
-    console.log(post, user);
+    // console.log(post, user);
     res.send({ success: 'post created successfully!', post: post });
     // req.flash('success', 'Posted Successfully!');
     // res.redirect(`/posts/${post.id}`);
 }
 
 module.exports.edit=async (req, res, next) => {
-    let { id }=req.params;
-    const post=await Post.findById(id).populate('author');
-    if (post.author.id!=req.user.id) {
-        req.flash('error', 'You Cant Edit Others Posts');
-        res.redirect(`/posts/${id}`);
+    let post=await Post.findById(req.params.id)
+    if (!post) {
+        return next(new Apperror('Product not found', 404))
     }
-    const newPost=await Post.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
-    console.log(newPost);
-    req.flash('success', 'Successfully Edited The Post');
-    res.redirect(`/posts/${id}`);
+    post=await Product.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+    })
+
+    if (!post) {
+        return next(new Apperror('Product not found', 404))
+    }
+    for (let file of req.files) {
+        let obj={
+            url: file.path,
+            public_id: file.filename
+        }
+        const imageDetail=await cloudinary.api.resource(obj.public_id);
+        post.images.push(obj);
+    }
+    if (req.body.deleteImages) {
+        for (let img of req.body.deleteImages) {
+            for (let i=0; i<post.images.length; i++) {
+                if (post.images[i].public_id==img) {
+                    cloudinary.uploader.destroy(post.images[i].public_id, (err, result) => {
+                        console.log(result);
+                    });
+                    post.images.splice(i, 1);
+                    break;
+                }
+            }
+        }
+    }
+    await post.save();
+    res.send({ success: "Post Edited Successfully!", post: post });
 }
 
 module.exports.delete=async (req, res, next) => {
@@ -105,21 +133,35 @@ module.exports.delete=async (req, res, next) => {
 module.exports.like=async (req, res, next) => {
     let { id }=req.params;
     const post=await Post.findById(id)
-        .populate('likes');
+        .populate('likes')
+        .populate('author')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        });
     post.likes.push(req.user.id);
     // console.log(post);
     await post.save();
-    req.flash(`${post.title} Post Liked`);
-    res.redirect(`/posts/${id}`);
+    console.log("Post: ", post);
+    res.send({ success: "Post Liked Successfully!", post: post });
 }
 
 module.exports.dislike=async (req, res, next) => {
     let { id }=req.params;
-    const post=await Post.findById(id);
+    const post=await Post.findById(id)
+        .populate('likes')
+        .populate('author')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        });
     let index=post.likes.indexOf(req.user.id);
     post.likes.splice(index, 1);
-    console.log(post);
     await post.save();
-    req.flash(`${post.title} Post Disliked`);
-    res.redirect(`/posts/${id}`);
+    console.log("Post: ", post);
+    res.send({ success: "Post Disliked Successfully!", post: post });
 }
