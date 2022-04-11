@@ -1,6 +1,6 @@
 import React from 'react'
 
-
+import logo from '../../Public/image/Picture2.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../Public/css/home.css';
 import { Grid, Row, Col } from "react-bootstrap"
@@ -37,7 +37,7 @@ export default function Header() {
   return (<>
 
     <div className="home-top-right" >
-      <img alt="" className="home-m-b-20" width="200" height="100" src="/Picture1.png">
+      <img alt="" className="Headerimg" width="200" height="100" src={logo}>
       </img>
 
       <a href='/register'><button className="home-btn btn" type="submit" style={mystyle} >Signup</button></a>
