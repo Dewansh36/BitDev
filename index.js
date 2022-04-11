@@ -1,5 +1,6 @@
 const express=require('express');
 const mongoose=require('mongoose');
+// const Mongostore=require('connect-mongo');
 const app=express();
 const cors=require('cors');
 const passport=require('passport');
@@ -15,6 +16,7 @@ const methodOverride=require('method-override');
 const axios=require('axios');
 require('dotenv').config();
 const multer=require('multer');
+require('dotenv').config();
 
 //React-Node middleware
 app.use(bodyParser.json());
@@ -27,23 +29,34 @@ app.use(
 );
 
 //Setting Up mongoose
-async function main() {
-    await mongoose.connect('mongodb://localhost:27017/BitDev');
-}
-
-main()
-    .then(() => {
-        console.log('Connected!');
+const connectDatabase = ()=>{
+    mongoose.connect(process.env.db_url,{
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
     })
-    .catch((err) => {
-        console.log('Error in Connection!');
-        console.log(err);
+    .then((data) => {
+        console.log(`Mongodb connected with server :${data.connection.host}`);
+        // console.log(data);
+    })
+    .catch((error) => {
+        console.log(error);
     });
+}
+//Setting Up Mongo Store
+// const store=new Mongostore(
+//     {
+//         mongoUrl: process.env.db_url,
+//         secret: process.env.db_secret,
+//         touchAfter: 24*3600
+//     }
+// );
 
-
-const port=4000;
-app.listen(port, () => {
-    console.log(`Listning on ${port}!`);
+// store.on('error', function (e) {
+//     console.log(e);
+// });
+connectDatabase()
+app.listen(process.env.PORT, () => {
+    console.log(`Listning on Port ${process.env.PORT}`);
 });
 
 //setting up sessions

@@ -19,9 +19,9 @@ export default function Messenger(props) {
   const socket = useRef();
   const [user] = useGetUser({});
   const scrollRef = useRef();
-
+  // console.log(user)
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("ws://localhost:5000");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -40,17 +40,16 @@ export default function Messenger(props) {
   useEffect(() => {
     socket.current.emit("addUser", user._id);
     socket.current.on("getUsers", (users) => {
-      setOnlineUsers(
-        user.followings.filter((f) => users.some((u) => u.userId === f))
-      );
+      setOnlineUsers(users);
+      console.log(users);
     });
   }, [user]);
 
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get("/conversations/" + user._id);
-        setConversations(res.data);
+        const res = await axios.get("http://localhost:4000/api/conversations/" + user._id);
+        setConversations(res.data.conversation);
       } catch (err) {
         console.log(err);
       }
@@ -61,8 +60,9 @@ export default function Messenger(props) {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("/messages/" + currentChat?._id);
+        const res = await axios.get("http://localhost:4000/api/messages/" + currentChat?._id);
         setMessages(res.data);
+        // console.log(res);
       } catch (err) {
         console.log(err);
       }
@@ -89,7 +89,7 @@ export default function Messenger(props) {
     });
 
     try {
-      const res = await axios.post("/messages", message);
+      const res = await axios.post("http://localhost:4000/api/messages", message);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (err) {
@@ -101,6 +101,8 @@ export default function Messenger(props) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  console.log(currentChat);
+  console.log(messages);
   return (
     <>
       <div className="messenger">

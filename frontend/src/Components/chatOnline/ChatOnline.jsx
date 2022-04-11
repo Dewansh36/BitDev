@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./chatonline.css";
+import SelectPageImage from "../../Public/image/SelectPageImage.png"
 
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
   const [friends, setFriends] = useState([]);
@@ -9,8 +10,10 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get("/users/friends/" + currentId);
-      setFriends(res.data);
+      console.log("called")
+      const res = await axios.get(`http://localhost:4000/user/${currentId}/friends`);
+      // console.log(res.data.curuser);
+      setFriends(res.data.curuser.friends);
     };
 
     getFriends();
@@ -20,10 +23,12 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
     setOnlineFriends(friends.filter((f) => onlineUsers.includes(f._id)));
   }, [friends, onlineUsers]);
 
+  console.log(friends)
+
   const handleClick = async (user) => {
     try {
       const res = await axios.get(
-        `/conversations/find/${currentId}/${user._id}`
+        `http://localhost:4000/api/conversations/find/${currentId}/${user._id}`
       );
       setCurrentChat(res.data);
     } catch (err) {
@@ -33,21 +38,17 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   return (
     <div className="chatOnline">
-      {onlineFriends.map((o) => (
+      {friends.map((o) => (
         <div className="chatOnlineFriend" onClick={() => handleClick(o)}>
           <div className="chatOnlineImgContainer">
             <img
               className="chatOnlineImg"
-              src={
-                o?.profilePicture
-                  ? PF + o.profilePicture
-                  : PF + "person/noAvatar.png"
-              }
+              src={o?.avatar?o.avatar:SelectPageImage}
               alt=""
             />
             <div className="chatOnlineBadge"></div>
           </div>
-          <span className="chatOnlineName">{o?.username}</span>
+          <span className="chatOnlineName">{o?.displayname}</span>
         </div>
       ))}
     </div>

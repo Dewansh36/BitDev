@@ -1,37 +1,46 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import "../../Public/css/conversations.css";
+import Loading from "../loading";
+import SelectPageImage from "../../Public/image/SelectPageImage.png"
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
+  const [loading, setloading] = useState(true);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   useEffect(() => {
-    const friendId = conversation.members.find((m) => m !== currentUser._id);
+    let friendId = conversation.members.find((m) => m !== currentUser._id);
 
     const getUser = async () => {
       try {
-        const res = await axios("/users?userId=" + friendId);
+        const res = await axios(`http://localhost:4000/user?userId=${friendId}`);
+        console.log(res);
         setUser(res.data);
+        setloading(false);
       } catch (err) {
         console.log(err);
       }
     };
     getUser();
   }, [currentUser, conversation]);
-
+  if (loading==true) {
+    return (
+        <Loading />
+    )
+}
   return (
+    <Fragment>
+    <Fragment>
     <div className="conversation">
       <img
         className="conversationImg"
-        src={
-          user?.profilePicture
-            ? PF + user.profilePicture
-            : PF + "person/noAvatar.png"
-        }
+        src={user?.avatar?user.avatar:SelectPageImage}
         alt=""
       />
-      <span className="conversationName">{user?.username}</span>
+      <span className="conversationName">{user?.displayname}</span>
     </div>
+    </Fragment>
+    </Fragment>
   );
 }
