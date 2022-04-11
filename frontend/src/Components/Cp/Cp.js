@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Styles from '../../Public/css/CP.module.css'
 import { Col, Container, Row } from 'react-bootstrap';
 import axios from 'axios';
+import Navbar from '../navbar/navbar'
+import useGetUser from '../../Hooks/useGetUser';
 
 function secondsToDhms(seconds) {
     seconds=Number(seconds);
@@ -27,18 +29,27 @@ const callApi=async (url) => {
 
 function Cp() {
     let rpRating=-1;
+    const [curUser]=useGetUser({});
     const [cfdata, setcfData]=useState({});
     // const [ccdata, setccData]=useState({});
     const [Upcomingdata, setUpcomingData]=useState({});
     const [Problemdata, setProblemData]=useState({});
     const [loading, setLoading]=useState(true);
     const [error, setError]=useState('');
+    let flag=false;
     // const ccname="dewansh_36";
-    const cfname="Dewansh05";
+    let cfname="Dewansh05";
     // const ccurl="https://competitive-programming-score.herokuapp.com/api/codechef/"+ccname;
-    const cfurl="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfname;
+    let cfurl="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfname;
     let cn1, cn2, cn3, cl1, cl2, cl3, ct1, ct2, ct3;
     let pn1, pn2, pn3, pl1, pl2, pl3;
+    useEffect(() => {
+        if (curUser!=undefined) {
+            cfname=curUser.cfhandle;
+            cfurl="https://competitive-programming-score.herokuapp.com/api/codeforces/"+cfname;
+            flag=true;
+        }
+    }, [curUser]);
     // useEffect(async () => {
     //     const response=await axios.get(cfurl);
     //     setcfData(response.data);
@@ -79,96 +90,99 @@ function Cp() {
                 setError('Something Went Wrong!');
                 setLoading(false);
             })
-    }, [])
-    if(Upcomingdata.result!=undefined) {
-        console.log(Upcomingdata);
-        let x=0;
-        while(Upcomingdata.result[x].phase=="BEFORE")
-            x++;
-        console.log(x);
-        x--;
-        cn1=Upcomingdata.result[x].name;
-        cl1="https://codeforces.com/contests/"+Upcomingdata.result[x].id;
-        let s=-1*(Upcomingdata.result[x].relativeTimeSeconds);
-        ct1="(starts in "+secondsToDhms(s)+")";
-        x--;
-        if (x>=0) {
-            cn2=Upcomingdata.result[x].name;
-            cl2="https://codeforces.com/contests/"+Upcomingdata.result[x].id;
-            s=-1*(Upcomingdata.result[x].relativeTimeSeconds);
-            ct2="(starts in "+secondsToDhms(s)+")";
+    }, [curUser]);
+    useEffect(() => {
+        if (Upcomingdata.result!=undefined&&rpRating!=-1) {
+            console.log(Upcomingdata);
+            let x=0;
+            while (Upcomingdata.result[x].phase=="BEFORE")
+                x++;
+            console.log(x);
             x--;
-        }
-        else {
-            cn2="";
-            cl2="";
-            ct2="";
-        }
-        if (x>=0) {
-            cn3=Upcomingdata.result[x].name;
-            cl3="https://codeforces.com/contests/"+Upcomingdata.result[x].id;
-            s=-1*(Upcomingdata.result[x].relativeTimeSeconds);
-            ct3="(starts in "+secondsToDhms(s)+")";
+            cn1=Upcomingdata.result[x].name;
+            cl1="https://codeforces.com/contests/"+Upcomingdata.result[x].id;
+            let s=-1*(Upcomingdata.result[x].relativeTimeSeconds);
+            ct1="(starts in "+secondsToDhms(s)+")";
             x--;
-        }
-        else {
-            cn3="";
-            cl3="";
-            ct3="";
-        }
-        if (Problemdata!={}) {
-            if (rpRating<=800)
-                rpRating=800;
-            else if (rpRating>800&&rpRating<=1000)
-                rpRating=1000;
-            else if (rpRating>1000&&rpRating<=1200)
-                rpRating=1200;
-            else if (rpRating>1200&&rpRating<=1400)
-                rpRating=1400;
-            else if (rpRating>1400&&rpRating<=1600)
-                rpRating=1600;
-            else if (rpRating>1600&&rpRating<=1800)
-                rpRating=1800;
-            else if (rpRating>1800&&rpRating<=2000)
-                rpRating=2000;
-            else if (rpRating>2000&&rpRating<=2200)
-                rpRating=2200;
-            else if (rpRating>2200&&rpRating<=2400)
-                rpRating=2400;
-            else if (rpRating>2400&&rpRating<=2600)
-                rpRating=2600;
-            else if (rpRating>2600&&rpRating<=2800)
-                rpRating=2800;
-            else if (rpRating>2800&&rpRating<=3000)
-                rpRating=3000;
-            else if (rpRating>3000&&rpRating<=3200)
-                rpRating=3200;
-            else
-                rpRating=3400;
-            let y=0;
-            console.log(rpRating);
-            for (let problem of Problemdata.result.problems) {
-                if (problem&&problem.rating&&problem.rating==rpRating) {
-                    let u="https://codeforces.com/problemset/problem/"+problem.contestId+"/"+problem.index;
-                    if (y==0) {
-                        pn1=problem.name;
-                        pl1=u;
+            if (x>=0) {
+                cn2=Upcomingdata.result[x].name;
+                cl2="https://codeforces.com/contests/"+Upcomingdata.result[x].id;
+                s=-1*(Upcomingdata.result[x].relativeTimeSeconds);
+                ct2="(starts in "+secondsToDhms(s)+")";
+                x--;
+            }
+            else {
+                cn2="";
+                cl2="";
+                ct2="";
+            }
+            if (x>=0) {
+                cn3=Upcomingdata.result[x].name;
+                cl3="https://codeforces.com/contests/"+Upcomingdata.result[x].id;
+                s=-1*(Upcomingdata.result[x].relativeTimeSeconds);
+                ct3="(starts in "+secondsToDhms(s)+")";
+                x--;
+            }
+            else {
+                cn3="";
+                cl3="";
+                ct3="";
+            }
+            if (Problemdata!={}) {
+                if (rpRating<=800)
+                    rpRating=800;
+                else if (rpRating>800&&rpRating<=1000)
+                    rpRating=1000;
+                else if (rpRating>1000&&rpRating<=1200)
+                    rpRating=1200;
+                else if (rpRating>1200&&rpRating<=1400)
+                    rpRating=1400;
+                else if (rpRating>1400&&rpRating<=1600)
+                    rpRating=1600;
+                else if (rpRating>1600&&rpRating<=1800)
+                    rpRating=1800;
+                else if (rpRating>1800&&rpRating<=2000)
+                    rpRating=2000;
+                else if (rpRating>2000&&rpRating<=2200)
+                    rpRating=2200;
+                else if (rpRating>2200&&rpRating<=2400)
+                    rpRating=2400;
+                else if (rpRating>2400&&rpRating<=2600)
+                    rpRating=2600;
+                else if (rpRating>2600&&rpRating<=2800)
+                    rpRating=2800;
+                else if (rpRating>2800&&rpRating<=3000)
+                    rpRating=3000;
+                else if (rpRating>3000&&rpRating<=3200)
+                    rpRating=3200;
+                else
+                    rpRating=3400;
+                let y=0;
+                console.log(rpRating);
+                for (let problem of Problemdata.result.problems) {
+                    if (problem&&problem.rating&&problem.rating==rpRating) {
+                        let u="https://codeforces.com/problemset/problem/"+problem.contestId+"/"+problem.index;
+                        if (y==0) {
+                            pn1=problem.name;
+                            pl1=u;
+                        }
+                        else if (y==1) {
+                            pn2=problem.name;
+                            pl2=u;
+                        }
+                        else {
+                            pn3=problem.name;
+                            pl3=u;
+                        }
+                        y++;
                     }
-                    else if (y==1) {
-                        pn2=problem.name;
-                        pl2=u;
-                    }
-                    else {
-                        pn3=problem.name;
-                        pl3=u;
-                    }
-                    y++;
+                    if (y==3)
+                        break;
                 }
-                if (y==3)
-                    break;
             }
         }
-    }
+    }, [curUser, flag, rpRating])
+
     // const [Problemdata, setProblemData]=useState({});
     // useEffect(async () => {
     //     const response=await axios.get('https://codeforces.com/api/problemset.problems');
@@ -185,6 +199,7 @@ function Cp() {
     else if (error=='') {
         return (
             <div className={Styles.CPbody}>
+                <Navbar user={curUser} />
                 <section id={Styles.stats}>
                     <Container>
                         <Row>
